@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={nato_sans_kr.className}>
-      <body>{children}</body>
+    <html lang="ko" className={`${nato_sans_kr.className} h-full bg-white`}>
+      <body className="h-full">{children}</body>
     </html>
   );
 }
