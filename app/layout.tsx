@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { nato_sans_kr } from '@/app/ui/fonts';
 import './globals.css';
+import { nato_sans_kr } from '@/app/ui/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
