@@ -1,10 +1,19 @@
-import Image from 'next/image';
 import styles from './page.module.css';
+import Image from 'next/image';
+import { signOut } from '@/auth';
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className={styles.main}>
       <h1 className="text-3xl font-bold underline ">Hello World!</h1>
+      <form
+        action={async () => {
+          'use server';
+          await signOut();
+        }}
+      >
+        <button>로그아웃</button>
+      </form>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
