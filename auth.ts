@@ -36,7 +36,11 @@ export const { auth, signIn, signOut } = NextAuth({
           const { email, password } = parsedCredentials.data;
           const userInfo = await getUserFromLogin({ email, password });
 
-          return userInfo?.user || null;
+          if (!userInfo) return null;
+
+          const { user } = userInfo;
+
+          return user;
         }
 
         return null;
