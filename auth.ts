@@ -38,9 +38,9 @@ export const { auth, signIn, signOut } = NextAuth({
 
           if (!userInfo) return null;
 
-          const { user } = userInfo;
+          const { user, accessToken } = userInfo;
 
-          return user;
+          return { ...user, accessToken };
         }
 
         return null;

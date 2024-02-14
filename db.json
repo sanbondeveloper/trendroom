@@ -2,7 +2,7 @@
   "users": [
     {
       "email": "test@test.com",
-      "password": "$2a$10$2EjOp9X0H3PGdQM.EtuUIePH0iTEBZobPucO6cO02mRq1rqEEkIfa",
+      "password": "$2a$10$3HXppxe.R4zHpvUlmNBil.eJAxtK.vx4rYXH878Oys8JVeohDLPKu",
       "name": "test",
       "id": 1
     }
