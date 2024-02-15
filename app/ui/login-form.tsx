@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import ValidationMessage from './validation-message';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '../lib/schema';
 import { authenticate } from '@/app/lib/actions';
 import { z } from 'zod';
-import ValidationMessage from './validation-message';
 
 type TLoginForm = z.infer<typeof LoginSchema>;
 
@@ -42,7 +42,7 @@ export default function LoginForm() {
         <div>
           <div className="flex items-center justify-between">
             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-              패스워드
+              비밀번호
             </label>
             <div className="text-sm">
               <Link href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
@@ -69,7 +69,7 @@ export default function LoginForm() {
 
       <p className="mt-10 text-center text-sm text-gray-500">
         아직 회원이 아니세요?{' '}
-        <Link href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+        <Link href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
           회원가입
         </Link>
       </p>
