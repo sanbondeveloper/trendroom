@@ -2,16 +2,21 @@
 
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LoginSchema } from '../lib/schema';
 import { authenticate } from '@/app/lib/actions';
+import { z } from 'zod';
+import ValidationMessage from './validation-message';
 
-interface ILoginForm {
-  email: string;
-  password: string;
-}
+type TLoginForm = z.infer<typeof LoginSchema>;
 
 export default function LoginForm() {
-  const { register } = useForm<ILoginForm>({
-    mode: 'onSubmit',
+  const {
+    register,
+    formState: { errors },
+  } = useForm<TLoginForm>({
+    mode: 'onTouched',
+    resolver: zodResolver(LoginSchema),
     defaultValues: { email: '', password: '' },
   });
 
@@ -31,6 +36,7 @@ export default function LoginForm() {
               {...register('email')}
             />
           </div>
+          {errors.email && <ValidationMessage message={errors.email?.message} />}
         </div>
 
         <div>
@@ -53,15 +59,11 @@ export default function LoginForm() {
               {...register('password')}
             />
           </div>
+          {errors.password && <ValidationMessage message={errors.password?.message} />}
         </div>
 
         <div>
-          <button
-            type="submit"
-            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            로그인
-          </button>
+          <LoginButton />
         </div>
       </form>
 
@@ -72,5 +74,16 @@ export default function LoginForm() {
         </Link>
       </p>
     </div>
+  );
+}
+
+function LoginButton() {
+  return (
+    <button
+      type="submit"
+      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >
+      로그인
+    </button>
   );
 }
