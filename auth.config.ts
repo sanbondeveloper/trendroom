@@ -8,10 +8,12 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnLoginPage = nextUrl.pathname.startsWith('/login');
+      const isOnRegisterPage = nextUrl.pathname.startsWith('/register');
 
       if (isOnLoginPage && isLoggedIn) return Response.redirect(new URL('/', nextUrl));
+      if (isOnRegisterPage && !isLoggedIn) return true;
 
-      return isLoggedIn;
+      return true;
     },
     async jwt({ token, user }) {
       return { ...token, ...user };

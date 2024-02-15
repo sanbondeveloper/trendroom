@@ -18,3 +18,23 @@ export async function authenticate(formData: FormData) {
     throw error;
   }
 }
+
+export async function signUp({ email, nickname, password }: { email: string; nickname: string; password: string }) {
+  try {
+    const response = await fetch('http://localhost:3001/register', {
+      method: 'POST',
+      body: JSON.stringify({ email, nickname, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) return null;
+
+    const user = await response.json();
+
+    return user;
+  } catch (error) {
+    console.error('회원가입 실패', error);
+  }
+}
