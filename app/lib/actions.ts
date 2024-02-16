@@ -36,5 +36,7 @@ export async function signUp({ email, nickname, password }: { email: string; nic
     return user;
   } catch (error) {
     console.error('회원가입 실패', error);
+
+    return null;
   }
 }
