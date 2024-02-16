@@ -4,18 +4,20 @@ import Image from 'next/image';
 
 export default function ProductItem({ product }: { product: IProduct }) {
   return (
-    <Link href="#" className="group">
-      <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
-        <Image
-          width={256}
-          height={325}
-          src={product.image}
-          alt={product.title}
-          className="h-full w-full object-cover object-center group-hover:opacity-75"
-        />
-      </div>
-      <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
-      <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
-    </Link>
+    <li>
+      <Link href="#" className="group">
+        <div className="relative h-72 rounded-lg bg-gray-200">
+          <Image
+            fill
+            src={product.image}
+            alt={product.title}
+            sizes="(min-width: 640p) 50vw, (min-width: 1024px) 33vw, 25vw"
+            className="object-center group-hover:opacity-75"
+          />
+        </div>
+        <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
+        <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+      </Link>
+    </li>
   );
 }
