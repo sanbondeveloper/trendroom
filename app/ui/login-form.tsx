@@ -15,7 +15,7 @@ export default function LoginForm() {
     register,
     formState: { errors },
   } = useForm<TLoginForm>({
-    mode: 'onTouched',
+    mode: 'onChange',
     resolver: zodResolver(LoginSchema),
     defaultValues: { email: '', password: '' },
   });
@@ -45,7 +45,7 @@ export default function LoginForm() {
               비밀번호
             </label>
             <div className="text-sm">
-              <Link href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+              <Link href="/login/find_pw" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 비밀번호를 잊으셨나요?
               </Link>
             </div>
