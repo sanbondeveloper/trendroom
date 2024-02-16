@@ -10,7 +10,7 @@ export const authConfig = {
       const isOnLoginPage = nextUrl.pathname.startsWith('/login');
       const isOnRegisterPage = nextUrl.pathname.startsWith('/register');
 
-      if (isOnLoginPage && isLoggedIn) return Response.redirect(new URL('/', nextUrl));
+      if ((isOnLoginPage || isOnRegisterPage) && isLoggedIn) return Response.redirect(new URL('/', nextUrl));
       if (isOnRegisterPage && !isLoggedIn) return true;
 
       return true;
