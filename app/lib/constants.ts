@@ -3,4 +3,5 @@ export const PRODUCT_CATEGORIES = {
   "women's clothing": '여자',
   jewelery: '럭셔리',
   electronics: '전자',
+  all: '전체',
 } as const;
