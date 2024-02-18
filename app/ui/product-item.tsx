@@ -6,7 +6,7 @@ export default function ProductItem({ product }: { product: IProduct }) {
   return (
     <li>
       <Link href="#" className="group">
-        <div className="relative h-48 overflow-hidden rounded-lg">
+        <div className="relative h-60 w-60 overflow-hidden rounded-lg">
           <Image
             fill
             src={product.image}
