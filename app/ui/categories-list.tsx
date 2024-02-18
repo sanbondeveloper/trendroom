@@ -22,12 +22,13 @@ export default function CategoriesList({ categories }: { categories: TProductCat
     replace(`${pathname}?${params.toString()}`);
   };
 
+  if (pathname !== '/') return null;
   if (!categories) return <div>오류 발생</div>;
 
   const categoriesWithAll = [...categories, 'all'] as TProductCategories[];
 
   return (
-    <ul className="mt-7 flex space-x-10">
+    <ul className="flex space-x-10">
       {categoriesWithAll?.map((category) => (
         <CategoryItem
           key={category}
