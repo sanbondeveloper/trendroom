@@ -1,8 +1,12 @@
 import { IProduct, TProductCategories } from './definitions';
 
-export async function getProducts(): Promise<IProduct[] | null> {
+export async function getProductsByCategory(category: TProductCategories): Promise<IProduct[] | null> {
   try {
-    const response = await fetch('https://fakestoreapi.com/products');
+    const apiUrl =
+      category === 'all'
+        ? 'https://fakestoreapi.com/products'
+        : `https://fakestoreapi.com/products/category/${category}`;
+    const response = await fetch(apiUrl);
 
     if (!response.ok) return null;
 

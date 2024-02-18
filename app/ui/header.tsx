@@ -1,10 +1,13 @@
 import { auth } from '@/auth';
+import { getCategories } from '../lib/api';
 import LogOutButton from './logout-button';
 import Link from 'next/link';
 import CategoriesList from './categories-list';
 
 export default async function Header() {
   const session = await auth();
+  const categories = await getCategories();
+
   return (
     <>
       <header className="fixed left-0 right-0 top-0 z-10 h-32 bg-white px-10 py-2 shadow">
@@ -20,7 +23,7 @@ export default async function Header() {
           </ul>
         </div>
         <h1 className="text-4xl font-bold text-gray-800">TrendRoom</h1>
-        <CategoriesList />
+        <CategoriesList categories={categories} />
       </header>
       <div className="mb-20" />
     </>
