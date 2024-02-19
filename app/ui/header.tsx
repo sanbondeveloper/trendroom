@@ -1,12 +1,14 @@
 import { auth } from '@/auth';
-import { getCategories } from '../lib/api';
+import { getCategories, getProductsByCategory } from '../lib/api';
 import LogOutButton from './logout-button';
 import Link from 'next/link';
 import CategoriesList from './categories-list';
+import Search from './search';
 
 export default async function Header() {
   const session = await auth();
   const categories = await getCategories();
+  const products = await getProductsByCategory('all');
 
   return (
     <>
@@ -24,10 +26,12 @@ export default async function Header() {
         </div>
         <div className="mb-6 flex items-center justify-between ">
           <h1 className="text-3xl font-bold text-gray-800">TrendRoom</h1>
-          <div className="flex gap-2">
-            <div>검색</div>
-            <div>장바구니</div>
-          </div>
+          <ul className="flex items-center gap-2">
+            <li>
+              <Search products={products} />
+            </li>
+            <li>장바구니</li>
+          </ul>
         </div>
         <CategoriesList categories={categories} />
       </header>
