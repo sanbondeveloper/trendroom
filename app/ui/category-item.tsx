@@ -11,7 +11,7 @@ export default function CategoryItem({ category, active, onChangeCategory }: ICa
   return (
     <li key={category}>
       <div
-        className={clsx('cursor-pointer', { 'border-b-4 border-indigo-500 pb-2.5': active })}
+        className={clsx('cursor-pointer', { 'border-b-2 border-indigo-500 pb-2': active })}
         onClick={() => onChangeCategory(category)}
       >
         {PRODUCT_CATEGORIES[category]}
