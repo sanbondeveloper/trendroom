@@ -35,3 +35,19 @@ export async function getCategories(): Promise<TProductCategories[] | null> {
     return null;
   }
 }
+
+export async function getProductById(id: number): Promise<IProduct | null> {
+  try {
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+
+    if (!response.ok) return null;
+
+    const product = await response.json();
+
+    return product;
+  } catch (error) {
+    console.error('특정 상품 조회 실패', error);
+
+    return null;
+  }
+}

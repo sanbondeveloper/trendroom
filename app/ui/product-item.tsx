@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function ProductItem({ product }: { product: IProduct }) {
   return (
     <li>
-      <Link href="#" className="group">
+      <Link href={`/products/${product.id}`} className="group">
         <div className="relative h-60 w-60 overflow-hidden rounded-lg">
           <Image
             fill
