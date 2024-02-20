@@ -14,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${nato_sans_kr.className} h-full bg-white`}>
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        {children}
+        <div id="modal-root" />
+      </body>
     </html>
   );
 }
