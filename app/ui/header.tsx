@@ -14,7 +14,7 @@ export default async function Header() {
   return (
     <>
       <header className="fixed left-0 right-0 top-0 z-10 bg-white px-10 pt-2 shadow">
-        <div className="mb-2 flex justify-end">
+        <div className="mb-3 flex justify-end">
           <ul className="flex w-40 justify-between text-xs">
             <li>
               <Link href="#">고객센터</Link>
