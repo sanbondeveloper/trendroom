@@ -4,7 +4,7 @@ import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import LogOutButton from './logout-button';
 import Link from 'next/link';
 import CategoriesList from './categories-list';
-import SearchModal from './search-modal';
+import SearchModal from './search/search-modal';
 
 export default async function Header() {
   const session = await auth();

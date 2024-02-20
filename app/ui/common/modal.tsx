@@ -25,12 +25,10 @@ export default function Modal({
   useEffect(() => {
     if (!open) return;
 
-    document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = `position: ""; top: "";`;
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      document.body.style.overflow = 'auto';
     };
   }, [open]);
 
