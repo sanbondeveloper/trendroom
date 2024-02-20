@@ -11,10 +11,20 @@ interface IModalProps {
   onClose?: () => void;
   maskClosable?: boolean;
   closable?: boolean;
+  full?: boolean;
 }
 
-export default function Modal({ open, children, onClose, closable = true, maskClosable = true }: IModalProps) {
+export default function Modal({
+  open,
+  children,
+  onClose,
+  closable = true,
+  maskClosable = true,
+  full = false,
+}: IModalProps) {
   useEffect(() => {
+    if (!open) return;
+
     document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
 
     return () => {
@@ -39,11 +49,15 @@ export default function Modal({ open, children, onClose, closable = true, maskCl
         className="modal-wrapper fixed inset-0 z-50 overflow-auto focus:outline-none"
       >
         <div
-          className="modal-inner relative top-1/2 mx-auto my-0 w-[600px] -translate-y-1/2 rounded-lg bg-white px-[20px] py-[40px] shadow-md"
+          className={clsx(
+            'modal-inner bg-white shadow-md',
+            { 'fixed inset-0': full },
+            { 'relative top-1/2 mx-auto my-0 w-[600px] -translate-y-1/2 rounded-lg px-[20px] py-[40px]': !full },
+          )}
           tabIndex={0}
         >
           {closable && (
-            <button className="absolute right-3 top-3">
+            <button className="absolute right-3 top-3" onClick={onClose}>
               <XMarkIcon className="w-6" />
             </button>
           )}

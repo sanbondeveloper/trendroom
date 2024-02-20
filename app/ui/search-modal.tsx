@@ -1,28 +1,28 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import { IProduct } from '../lib/definitions';
-import SearchForm from './search-form';
+'use client';
 
-interface ISearchModalProps {
-  open: boolean;
-  products: IProduct[];
-  onClose: () => void;
-}
-export default function SearchModal({ open, products, onClose }: ISearchModalProps) {
-  if (!open) return null;
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
+import { IProduct } from '../lib/definitions';
+import Modal from './common/modal';
+import SearchForm from './search-form';
+export default function SearchModal({ products }: { products: IProduct[] | null }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+
+  if (!products) return <div>에러 발생</div>;
 
   return (
-    <div className="fixed inset-0 flex justify-center bg-white pt-10">
-      <div className="w-full max-w-3xl p-6 ">
-        <button
-          onClick={onClose}
-          className="absolute right-0 top-0 m-4 text-gray-600 hover:text-gray-900"
-          aria-label="닫기"
-        >
-          <XMarkIcon className="h-7 w-7" />
-        </button>
+    <>
+      <button onClick={() => setIsModalOpen(true)}>
+        <MagnifyingGlassIcon className="w-7" />
+      </button>
 
-        <SearchForm products={products} onClose={onClose} />
-      </div>
-    </div>
+      <Modal open={isModalOpen} onClose={handleClose} full={true}>
+        <SearchForm products={products} onClose={handleClose} />
+      </Modal>
+    </>
   );
 }

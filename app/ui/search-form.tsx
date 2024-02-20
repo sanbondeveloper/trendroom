@@ -1,7 +1,7 @@
-import { XCircleIcon } from '@heroicons/react/24/solid';
-import { IProduct } from '../lib/definitions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { IProduct } from '../lib/definitions';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 
 interface ISearchFormProps {
   products: IProduct[];
@@ -17,16 +17,17 @@ export default function SearchForm({ products, onClose }: ISearchFormProps) {
   };
 
   return (
-    <>
+    <div className="mx-auto my-0 w-[800px]">
       <form>
-        <div className="relative flex w-full items-center">
+        <div className="relative flex items-center">
           <label htmlFor="search" className="sr-only">
             Search
           </label>
           <input
             id="search"
             type="text"
-            className="w-full border-x-0 border-b-2 border-t-0 border-black px-2 pb-3 focus:border-black"
+            className="mt-14 w-full border-x-0 border-b-2 border-t-0 border-black px-2 pb-3 focus:border-black"
+            autoComplete="off"
             placeholder="검색어를 입력하세요"
             onChange={(e) => handleSubmit(e.target.value)}
           />
@@ -54,6 +55,6 @@ export default function SearchForm({ products, onClose }: ISearchFormProps) {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
