@@ -32,7 +32,7 @@ export default function Modal({
       document.body.style.cssText = `position: ""; top: "";`;
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
     };
-  }, []);
+  }, [open]);
 
   const onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget && maskClosable) onClose?.();
