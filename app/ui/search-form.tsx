@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IProduct } from '../lib/definitions';
 import { XCircleIcon } from '@heroicons/react/24/solid';
+import SearchHighlight from './search-highlight';
 
 interface ISearchFormProps {
   products: IProduct[];
@@ -9,16 +10,22 @@ interface ISearchFormProps {
 }
 
 export default function SearchForm({ products, onClose }: ISearchFormProps) {
+  const [query, setQuery] = useState('');
   const [result, setResult] = useState<IProduct[]>([]);
   const { push } = useRouter();
 
-  const handleSubmit = (term: string) => {
-    setResult(products.filter((product) => term !== '' && product.title.toLowerCase().includes(term.toLowerCase())));
+  const handleSubmit = (query: string) => {
+    setQuery(query);
+    setResult(products.filter((product) => query !== '' && product.title.toLowerCase().includes(query.toLowerCase())));
   };
 
   return (
-    <div className="mx-auto my-0 w-[800px]">
-      <form>
+    <div className="mx-auto my-0 h-full w-[800px]">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <div className="relative flex items-center">
           <label htmlFor="search" className="sr-only">
             Search
@@ -41,17 +48,18 @@ export default function SearchForm({ products, onClose }: ISearchFormProps) {
         </div>
       </form>
 
-      <ul className="pt-2 text-sm">
+      <ul className="h-[800px] overflow-auto pt-2 text-sm">
         {result.map((product) => (
-          <li
-            key={product.id}
-            onClick={() => {
-              push(`/products/${product.id}`);
-              onClose();
-            }}
-            className="cursor-pointer py-2"
-          >
-            {product.title}
+          <li key={product.id} className=" py-4">
+            <div
+              onClick={() => {
+                push(`/products/${product.id}`);
+                onClose();
+              }}
+              className="w-fit cursor-pointer"
+            >
+              <SearchHighlight text={product.title} query={query} />
+            </div>
           </li>
         ))}
       </ul>
