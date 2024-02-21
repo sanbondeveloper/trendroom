@@ -1,7 +1,5 @@
 import { getProductById } from '@/app/lib/api';
-import { dollarToWon } from '@/app/lib/util';
-import SizesSelect from '@/app/ui/sizes-select';
-import Image from 'next/image';
+import ProductDetail from '@/app/ui/detail/product-detail';
 
 export default async function ProductDetailPage({ params }: { params: { productId: number } }) {
   const id = params.productId;
@@ -9,25 +7,5 @@ export default async function ProductDetailPage({ params }: { params: { productI
 
   if (!product) return <div>오류 발생</div>;
 
-  return (
-    <div className="mx-auto mt-4 max-w-5xl">
-      <div className="flex items-center">
-        <div className="relative h-72 w-72 flex-1">
-          <Image fill src={product.image} alt={product.title} sizes="40wv" className="object-contain" />
-        </div>
-        <div className="flex-1">
-          <div className="mb-3">
-            <div className="text-sm">구매가</div>
-            <div className="text-2xl font-bold">{dollarToWon(product.price).toLocaleString()}</div>
-          </div>
-          <div className="mb-4 text-lg">{product.title}</div>
-          <SizesSelect />
-          <div className="mb-5 flex flex-col">
-            <button className="rounded-md bg-[#ef6253] px-3 py-3 font-bold text-white">장바구니에 담기</button>
-            <button className="border-1 mt-2 rounded-md border-[#ccc] px-3 py-3">관심상품 72</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <ProductDetail product={product} />;
 }
