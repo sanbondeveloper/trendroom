@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ellipsisText, getRecentSearches, setRecentSearches } from '@/app/lib/util';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 
-export default function RecentSearch() {
+export default function RecentSearch({ onClose }: { onClose: () => void }) {
   const [recentSearches, _setRecentSearches] = useState<string[]>([]);
+  const { push } = useRouter();
 
   useEffect(() => {
     _setRecentSearches(getRecentSearches());
@@ -34,7 +35,14 @@ export default function RecentSearch() {
             className="flex w-fit cursor-pointer items-center gap-2 rounded-2xl border px-3 py-1 text-sm"
           >
             <div className="pb-1 text-gray-600">
-              <Link href={`/?query=${search}`}>{ellipsisText(search)}</Link>
+              <div
+                onClick={() => {
+                  push(`/?query=${search}`);
+                  onClose();
+                }}
+              >
+                {ellipsisText(search)}
+              </div>
             </div>
             <button
               type="button"
