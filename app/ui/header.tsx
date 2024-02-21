@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { getCategories, getProductsByCategory } from '../lib/api';
+import { getCategories, getProducts } from '../lib/api';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import LogOutButton from './logout-button';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ import SearchModal from './search/search-modal';
 export default async function Header() {
   const session = await auth();
   const categories = await getCategories();
-  const products = await getProductsByCategory('all');
+  const products = await getProducts('all', '');
 
   return (
     <>
