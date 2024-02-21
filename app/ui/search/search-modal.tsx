@@ -20,7 +20,7 @@ export default function SearchModal({ products }: { products: IProduct[] | null 
   return (
     <>
       <button onClick={() => setIsModalOpen(true)}>
-        <MagnifyingGlassIcon className="w-7" />
+        <MagnifyingGlassIcon className="w-9" />
       </button>
 
       <Modal open={isModalOpen} onClose={handleClose} full={true}>
