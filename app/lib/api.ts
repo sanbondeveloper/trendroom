@@ -1,6 +1,6 @@
 import { IProduct, TProductCategories } from './definitions';
 
-export async function getProductsByCategory(category: TProductCategories): Promise<IProduct[] | null> {
+export async function getProducts(category: TProductCategories, query: string): Promise<IProduct[] | null> {
   try {
     const apiUrl =
       category === 'all'
@@ -12,7 +12,9 @@ export async function getProductsByCategory(category: TProductCategories): Promi
 
     const products = await response.json();
 
-    return products;
+    return query === ''
+      ? products
+      : products.filter((product: IProduct) => product.title.toLowerCase().includes(query.toLowerCase()));
   } catch (error) {
     console.error('제품 리스트 조회 실패', error);
 
