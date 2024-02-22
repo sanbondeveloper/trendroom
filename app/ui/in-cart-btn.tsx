@@ -10,9 +10,11 @@ export default function InCartBtn() {
   return (
     <div className="relative cursor-pointer">
       <ShoppingBagIcon className="w-9" />
-      <div className="absolute left-4 top-[20px] flex items-center justify-center rounded-xl bg-red-500 px-[6px] py-[2px] text-xs font-bold text-white">
-        1
-      </div>
+      {count > 0 && (
+        <div className="absolute left-4 top-[20px] flex items-center justify-center rounded-xl bg-red-500 px-[6px] py-[2px] text-xs font-bold text-white">
+          {count}
+        </div>
+      )}
     </div>
   );
 }
