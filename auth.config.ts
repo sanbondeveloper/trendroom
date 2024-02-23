@@ -5,9 +5,7 @@ export const authConfig = {
     signIn: '/login',
   },
   callbacks: {
-    // async signIn () {},
     authorized({ auth, request: { nextUrl } }) {
-      console.log(auth?.user);
       const isLoggedIn = !!auth?.user;
       const isOnLoginPage = nextUrl.pathname.startsWith('/login');
       const isOnRegisterPage = nextUrl.pathname.startsWith('/register');
