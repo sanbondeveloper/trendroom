@@ -1,12 +1,9 @@
 import { PRODUCT_CATEGORIES } from './constants';
 
 export interface IUser {
-  accessToken: string;
-  user: {
-    email: string;
-    username: string;
-    id: string;
-  };
+  email: string;
+  username: string;
+  _id: string;
 }
 
 export interface IProduct {

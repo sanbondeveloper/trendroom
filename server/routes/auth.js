@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
 
     if (!isMatch) return res.status(401).json();
 
-    res.status(200).json({ email: user.email, nickname: user.nickname, _id: user._id });
+    res.status(200).json({ email: user.email, name: user.nickname, id: user._id });
   } catch (err) {
     console.error(err);
 

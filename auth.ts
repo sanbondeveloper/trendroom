@@ -29,6 +29,10 @@ export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
+      // credentials: {
+      //   email: { type: 'email' },
+      //   password: { type: 'password' },
+      // },
       async authorize(credentials) {
         const parsedCredentials = z.object({ email: z.string().email(), password: z.string() }).safeParse(credentials);
 
@@ -38,9 +42,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
           if (!userInfo) return null;
 
-          const { user, accessToken } = userInfo;
-
-          return { ...user, accessToken };
+          return userInfo;
         }
 
         return null;
