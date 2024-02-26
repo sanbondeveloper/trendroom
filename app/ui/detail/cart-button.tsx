@@ -11,7 +11,7 @@ export default function CartButton({ product, size }: ICartButtonProps) {
   const [cart, setCart] = useRecoilState(cartState);
 
   const handleCardAdd = () => {
-    const isExist = cart.some((item) => item.product.id === product.id && item.size === size);
+    const isExist = cart.some((item) => item.product.id === product.id);
     if (isExist) return;
 
     setCart((prevState) => {
