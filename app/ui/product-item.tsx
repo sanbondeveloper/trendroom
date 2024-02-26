@@ -7,17 +7,29 @@ export default function ProductItem({ product }: { product: IProduct }) {
   return (
     <li>
       <Link href={`/products/${product.id}`} className="group">
-        <div className="relative h-48 w-48 overflow-hidden rounded-lg">
-          <Image
-            fill
-            sizes="200px"
-            src={product.image}
-            alt={product.title}
-            className="object-contain group-hover:opacity-75"
-          />
+        <div className="flex justify-center rounded-lg border py-8">
+          <div className="relative h-40 w-40  overflow-hidden rounded-lg">
+            <Image
+              fill
+              sizes="160px"
+              src={product.image}
+              alt={product.title}
+              className="object-contain group-hover:opacity-75"
+            />
+          </div>
         </div>
-        <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
-        <p className="mt-1 text-lg font-medium text-gray-900">{dollarToWon(product.price).toLocaleString()}</p>
+        <h3
+          className="mt-4 h-10 overflow-hidden text-ellipsis whitespace-normal break-keep text-sm text-gray-700"
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
+          {product.title}
+        </h3>
+        <p className="mt-1 text-lg font-medium text-gray-900">{dollarToWon(product.price).toLocaleString() + '원'}</p>
+        <div className="text-xs text-gray-400">구매가</div>
       </Link>
     </li>
   );
