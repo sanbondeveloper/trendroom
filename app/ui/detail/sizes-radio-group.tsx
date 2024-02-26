@@ -14,7 +14,7 @@ export default function SizesRadioGroup({ selectedSize, onSizeChange, onClose }:
     <fieldset>
       <legend className="sr-only">사이즈 선택</legend>
 
-      <div className="mx-auto my-0 grid w-[400px] grid-cols-3 gap-4">
+      <div className="mx-auto my-0 grid w-[400px] grid-cols-3 gap-6 py-16">
         {SIZES.map((size) => (
           <div
             key={size}

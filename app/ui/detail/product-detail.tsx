@@ -17,13 +17,15 @@ export default function ProductDetail({ product }: { product: IProduct }) {
   return (
     <div className="mx-auto mt-11 max-w-5xl">
       <div className="flex items-center">
-        <div className="relative h-72 w-72 flex-1">
-          <Image fill src={product.image} alt={product.title} sizes="288px" className="object-contain" />
+        <div className="mr-10 flex flex-1 justify-center rounded-lg border py-28">
+          <div className="relative h-52 w-52">
+            <Image fill src={product.image} alt={product.title} sizes="288px" className="object-contain" />
+          </div>
         </div>
         <div className="flex-1">
           <div className="mb-3">
             <div className="text-sm">구매가</div>
-            <div className="text-2xl font-bold">{dollarToWon(product.price).toLocaleString()}</div>
+            <div className="text-2xl font-bold">{dollarToWon(product.price).toLocaleString() + '원'}</div>
           </div>
           <div className="mb-4 text-lg">{product.title}</div>
           <SizesModal size={size} onSizeChange={handleSizeChange} />
