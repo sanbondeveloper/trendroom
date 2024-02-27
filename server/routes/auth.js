@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = require('express').Router();
 const User = require('../models/user');
 
@@ -38,7 +39,13 @@ router.post('/login', async (req, res) => {
 
     if (!isMatch) return res.status(401).json();
 
-    res.status(200).json({ email: user.email, name: user.nickname, id: user._id });
+    const customUser = { nickname: user.nickname, id: user._id };
+
+    const accessToken = jwt.sign(customUser, process.env.JWT_SECRET_KEY, {
+      expiresIn: '1d',
+    });
+
+    res.status(200).json({ ...customUser, accessToken });
   } catch (err) {
     console.error(err);
 
