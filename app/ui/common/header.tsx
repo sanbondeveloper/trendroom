@@ -1,11 +1,11 @@
 import { auth } from '@/auth';
-import { getCategories, getProducts } from '../lib/api';
-import LogOutButton from './logout-button';
+import { getCategories, getProducts } from '../../lib/api';
+import LogOutButton from '../logout-button';
 import Link from 'next/link';
-import CategoriesList from './categories-list';
-import SearchModal from './search/search-modal';
-import InCartBtn from './in-cart-btn';
-import CartWrapper from './cart/cart-wrapper';
+import CategoriesList from '../categories-list';
+import SearchModal from '../search/search-modal';
+import InCartBtn from '../in-cart-btn';
+import CartWrapper from '../cart/cart-wrapper';
 
 export default async function Header() {
   const session = await auth();
@@ -25,7 +25,7 @@ export default async function Header() {
                 <Link href="#">마이페이지</Link>
               </li>
               <li className="ml-6">
-                <Link href="#">관심</Link>
+                <Link href="/interest">관심</Link>
               </li>
               <li className="ml-6">
                 <Link href="#">알림</Link>

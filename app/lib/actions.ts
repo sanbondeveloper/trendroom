@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn, auth } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { IProduct } from './definitions';
 import { revalidateTag } from 'next/cache';
@@ -44,9 +44,9 @@ export async function signUp({ email, nickname, password }: { email: string; nic
 }
 
 export async function interest(product: IProduct) {
-  const session = await auth();
-
   try {
+    const session = await auth();
+
     const response = await fetch('http://localhost:3001/interest', {
       method: 'POST',
       body: JSON.stringify({ userId: session?.user?.id, product }),
