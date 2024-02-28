@@ -3,7 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const auth = require('./routes/auth');
+const user = require('./routes/user');
+const { JwtMiddleware } = require('./lib/middleware');
 
 const app = express();
 
@@ -13,6 +16,7 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -20,6 +24,8 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(auth);
+app.use(JwtMiddleware);
+app.use(user);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT} port`);

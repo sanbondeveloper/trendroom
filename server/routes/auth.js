@@ -45,6 +45,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d',
     });
 
+    res.cookie('access_token', accessToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
     res.status(200).json({ ...customUser, accessToken });
   } catch (err) {
     console.error(err);

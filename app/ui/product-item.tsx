@@ -2,13 +2,18 @@ import { IProduct } from '../lib/definitions';
 import { dollarToWon } from '../lib/util';
 import Link from 'next/link';
 import Image from 'next/image';
+import FavoritesBtn from './favorites-btn';
+import { getInterests } from '../lib/api';
 
-export default function ProductItem({ product }: { product: IProduct }) {
+export default async function ProductItem({ product }: { product: IProduct }) {
+  const interests = (await getInterests()) || [];
+  const isInterest = !!interests.find((interest) => interest.id === product.id);
+
   return (
-    <li>
+    <li className="relative">
       <Link href={`/products/${product.id}`} className="group">
         <div className="flex justify-center rounded-lg border py-8">
-          <div className="relative h-40 w-40  overflow-hidden rounded-lg">
+          <div className="relative h-40 w-40 overflow-hidden rounded-lg">
             <Image
               fill
               sizes="160px"
@@ -31,6 +36,7 @@ export default function ProductItem({ product }: { product: IProduct }) {
         <p className="mt-1 text-lg font-medium text-gray-900">{dollarToWon(product.price).toLocaleString() + '원'}</p>
         <div className="text-xs text-gray-400">구매가</div>
       </Link>
+      <FavoritesBtn active={isInterest} product={product} />
     </li>
   );
 }
