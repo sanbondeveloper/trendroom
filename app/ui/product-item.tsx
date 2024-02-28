@@ -8,10 +8,12 @@ export default function ProductItem({
   product,
   interests,
   setOptimisticInterests,
+  setOptimisticProducts = null,
 }: {
   product: IProduct;
   interests: IProduct[];
   setOptimisticInterests: (product: IProduct) => void;
+  setOptimisticProducts?: ((id: number) => void) | null;
 }) {
   const isInterest = !!interests.find((interest) => interest.id === product.id);
 
@@ -42,7 +44,12 @@ export default function ProductItem({
         <p className="mt-1 text-lg font-medium text-gray-900">{dollarToWon(product.price).toLocaleString() + '원'}</p>
         <div className="text-xs text-gray-400">구매가</div>
       </Link>
-      <FavoritesBtn active={isInterest} product={product} setOptimisticInterests={setOptimisticInterests} />
+      <FavoritesBtn
+        active={isInterest}
+        product={product}
+        setOptimisticInterests={setOptimisticInterests}
+        setOptimisticProducts={setOptimisticProducts}
+      />
     </li>
   );
 }

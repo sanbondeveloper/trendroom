@@ -8,14 +8,17 @@ export default function FavoritesBtn({
   active,
   product,
   setOptimisticInterests,
+  setOptimisticProducts = null,
 }: {
   active: boolean;
   product: IProduct;
   setOptimisticInterests: (product: IProduct) => void;
+  setOptimisticProducts?: ((id: number) => void) | null;
 }) {
   return (
     <form
       action={async () => {
+        setOptimisticProducts?.(product.id);
         setOptimisticInterests(product);
         await interest(product);
       }}

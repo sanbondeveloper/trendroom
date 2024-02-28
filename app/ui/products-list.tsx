@@ -4,7 +4,15 @@ import { useOptimistic } from 'react';
 import { IProduct } from '../lib/definitions';
 import ProductItem from './product-item';
 
-export default function ProductsList({ products, interests }: { products: IProduct[]; interests: IProduct[] }) {
+export default function ProductsList({
+  products,
+  interests,
+  setOptimisticProducts = null,
+}: {
+  products: IProduct[];
+  interests: IProduct[];
+  setOptimisticProducts?: ((id: number) => void) | null;
+}) {
   const [optimisticInterests, setOptimisticInterests] = useOptimistic(interests, (state, product: IProduct) => {
     const interest = state.find((interest) => interest.id === product.id);
 
@@ -24,6 +32,7 @@ export default function ProductsList({ products, interests }: { products: IProdu
           <ProductItem
             key={product.id}
             product={product}
+            setOptimisticProducts={setOptimisticProducts}
             interests={optimisticInterests}
             setOptimisticInterests={setOptimisticInterests}
           />
