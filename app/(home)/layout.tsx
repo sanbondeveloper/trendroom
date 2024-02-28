@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Header from '../ui/header';
+import Header from '../ui/common/header';
 
 export const metadata: Metadata = {
   title: 'TrendRoom',
