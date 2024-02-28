@@ -4,10 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FavoritesBtn from './favorites-btn';
 import { getInterests } from '../lib/api';
+import { auth } from '@/auth';
 
 export default async function ProductItem({ product }: { product: IProduct }) {
   const interests = (await getInterests()) || [];
   const isInterest = !!interests.find((interest) => interest.id === product.id);
+  const session = await auth();
 
   return (
     <li className="relative">
@@ -36,7 +38,7 @@ export default async function ProductItem({ product }: { product: IProduct }) {
         <p className="mt-1 text-lg font-medium text-gray-900">{dollarToWon(product.price).toLocaleString() + '원'}</p>
         <div className="text-xs text-gray-400">구매가</div>
       </Link>
-      <FavoritesBtn active={isInterest} product={product} />
+      <FavoritesBtn active={isInterest} product={product} session={session} />
     </li>
   );
 }

@@ -58,6 +58,8 @@ export async function getProductById(id: number): Promise<IProduct | null> {
 export async function getInterests(): Promise<IProduct[] | null> {
   const session = await auth();
 
+  if (!session) return null;
+
   try {
     const response = await fetch('http://localhost:3001/interest', {
       headers: {
