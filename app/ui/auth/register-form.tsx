@@ -31,7 +31,24 @@ export default function RegisterForm() {
       });
     }
 
-    await signUp({ email, nickname, password });
+    const res = await signUp({ email, nickname, password });
+
+    if (res === null) return;
+
+    if (res.message === 'Email already exists') {
+      return setError('email', {
+        type: 'manual',
+        message: '중복된 이메일입니다.',
+      });
+    }
+
+    if (res.message === 'Nickname already exists') {
+      return setError('nickname', {
+        type: 'manual',
+        message: '중복된 닉네임입니다.',
+      });
+    }
+
     router.push('/login');
   };
 

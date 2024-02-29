@@ -21,7 +21,15 @@ export async function authenticate(formData: FormData) {
   }
 }
 
-export async function signUp({ email, nickname, password }: { email: string; nickname: string; password: string }) {
+export async function signUp({
+  email,
+  nickname,
+  password,
+}: {
+  email: string;
+  nickname: string;
+  password: string;
+}): Promise<{ message: string } | null> {
   try {
     const response = await fetch('http://localhost:3001/register', {
       method: 'POST',
@@ -31,11 +39,11 @@ export async function signUp({ email, nickname, password }: { email: string; nic
       },
     });
 
-    if (!response.ok) return null;
+    if (response.status !== 201 && response.status !== 409) return null;
 
-    const user = await response.json();
+    const message = await response.json();
 
-    return user;
+    return message;
   } catch (error) {
     console.error('회원가입 실패', error);
 
