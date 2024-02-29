@@ -23,7 +23,7 @@ export default function CartButton({ product, size }: ICartButtonProps) {
     <button
       disabled={size === ''}
       onClick={handleCardAdd}
-      className="rounded-md bg-[#ef6253] px-3 py-3 font-bold text-white disabled:bg-gray-300"
+      className="ml-1 rounded-md bg-[#ef6253] px-3 py-3 font-bold text-white disabled:bg-gray-300"
     >
       장바구니에 담기
     </button>
