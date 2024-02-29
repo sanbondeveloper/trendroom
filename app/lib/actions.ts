@@ -4,6 +4,7 @@ import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { IProduct } from './definitions';
 import { revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function authenticate(formData: FormData) {
   try {
@@ -71,4 +72,12 @@ export async function interest(product: IProduct) {
   } catch (error) {
     console.error('관심상품등록 실패', error);
   }
+}
+
+export async function checkSession() {
+  const session = await auth();
+
+  if (session) return;
+
+  redirect('/login');
 }

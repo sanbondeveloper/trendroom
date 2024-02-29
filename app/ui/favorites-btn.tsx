@@ -2,7 +2,7 @@ import React from 'react';
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import { BookmarkIcon as BookMarkFillIcon } from '@heroicons/react/24/solid';
 import { IProduct } from '../lib/definitions';
-import { interest } from '../lib/actions';
+import { checkSession, interest } from '../lib/actions';
 
 export default function FavoritesBtn({
   active,
@@ -18,6 +18,7 @@ export default function FavoritesBtn({
   return (
     <form
       action={async () => {
+        await checkSession();
         setOptimisticProducts?.(product.id);
         setOptimisticInterests(product);
         await interest(product);
