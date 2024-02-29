@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import { getCategories, getProducts } from '../../lib/api';
-import LogOutButton from '../logout-button';
+import LogOutButton from '../auth/logout-button';
 import Link from 'next/link';
 import CategoriesList from '../categories-list';
 import SearchModal from '../search/search-modal';

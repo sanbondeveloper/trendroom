@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterSchema } from '../lib/schema';
+import { RegisterSchema } from '../../lib/schema';
 import { z } from 'zod';
-import { signUp } from '../lib/actions';
+import { signUp } from '../../lib/actions';
 import Link from 'next/link';
 import ValidationMessage from './validation-message';
 
