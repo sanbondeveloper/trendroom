@@ -11,6 +11,7 @@ interface IModalProps {
   onClose?: () => void;
   maskClosable?: boolean;
   closable?: boolean;
+  title?: string | null;
   full?: boolean;
 }
 
@@ -20,6 +21,7 @@ export default function Modal({
   onClose,
   closable = true,
   maskClosable = true,
+  title = null,
   full = false,
 }: IModalProps) {
   useEffect(() => {
@@ -50,16 +52,19 @@ export default function Modal({
           className={clsx(
             'modal-inner bg-white shadow-md',
             { 'fixed inset-0': full },
-            { 'relative top-1/2 mx-auto my-0 w-[600px] -translate-y-1/2 rounded-lg px-[20px] py-[40px]': !full },
+            { 'relative top-1/2 mx-auto my-0 w-[600px] -translate-y-1/2 rounded-lg ': !full },
           )}
           tabIndex={0}
         >
-          {closable && (
-            <button className="absolute right-3 top-3" onClick={onClose}>
-              <XMarkIcon className="w-6" />
-            </button>
-          )}
-          {children}
+          <div>
+            <h2 className={clsx({ 'pt-3 text-center text-lg font-bold': !!title })}>{title}</h2>
+            {closable && (
+              <button className="absolute right-3 top-[15px]" onClick={onClose}>
+                <XMarkIcon className="w-6" />
+              </button>
+            )}
+          </div>
+          <div className="px-[20px] py-[40px]">{children}</div>
         </div>
       </div>
     </Portal>
