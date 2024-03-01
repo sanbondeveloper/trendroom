@@ -9,3 +9,9 @@ declare module 'next-auth' {
     accessToken: string;
   }
 }
+
+declare global {
+  interface Window {
+    daum: any;
+  }
+}
