@@ -1,17 +1,17 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressSchema } from '../../lib/schema';
+import { TAddAddressForm } from '@/app/lib/definitions';
 import ValidationMessage from '../auth/validation-message';
 import ZipcodeBtn from './zipcode-btn';
-
-type TAddAddressForm = z.infer<typeof AddressSchema>;
+import { addAddress } from '@/app/lib/actions';
 export default function AddAddressForm({ onClose }: { onClose: () => void }) {
   const {
     register,
     formState: { errors, isValid },
     setValue,
+    handleSubmit,
   } = useForm<TAddAddressForm>({
     mode: 'onChange',
     resolver: zodResolver(AddressSchema),
@@ -23,8 +23,13 @@ export default function AddAddressForm({ onClose }: { onClose: () => void }) {
     setValue('address', address);
   };
 
+  const onSubmit: SubmitHandler<TAddAddressForm> = async (data) => {
+    await addAddress(data);
+    onClose();
+  };
+
   return (
-    <form className="px-6">
+    <form className="px-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="h-[90px]">
         <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
           이름

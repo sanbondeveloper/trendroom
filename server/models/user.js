@@ -6,6 +6,14 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     nickname: { type: String, required: true, unique: true },
     interests: { type: Array, default: [] },
+    defaultAddress: {
+      name: { type: String },
+      phone: { type: String },
+      zipcode: { type: String },
+      address: { type: String },
+      details: { type: String },
+    },
+    addressList: { type: Array, default: [] },
   },
   {
     timestamps: true,
@@ -41,10 +49,18 @@ userSchema.statics.interest = async function ({ userId, product }) {
   return await user.save();
 };
 
-userSchema.methods.getInterests = async function ({ userId }) {
+userSchema.statics.addAddress = async function ({ userId, addressInfo }) {
   const user = await this.findById(userId);
+  const id = user.addressList.length + 1;
+  const { checked, ...address } = addressInfo;
 
-  return user.interests;
+  user.addressList.push({ ...address, id });
+
+  if (checked) {
+    user.defaultAddress = address;
+  }
+
+  return await user.save();
 };
 
 module.exports = mongoose.model('User', userSchema);

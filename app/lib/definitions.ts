@@ -1,3 +1,5 @@
+import { z } from 'zod';
+import { AddressSchema } from './schema';
 import { PRODUCT_CATEGORIES } from './constants';
 
 export interface IUser {
@@ -18,3 +20,5 @@ export interface IProduct {
 }
 
 export type TProductCategories = keyof typeof PRODUCT_CATEGORIES;
+
+export type TAddAddressForm = z.infer<typeof AddressSchema>;

@@ -2,7 +2,7 @@
 
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { IProduct } from './definitions';
+import { IProduct, TAddAddressForm } from './definitions';
 import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -71,6 +71,49 @@ export async function interest(product: IProduct) {
     return true;
   } catch (error) {
     console.error('관심상품등록 실패', error);
+  }
+}
+
+export async function getDefaultAddress() {
+  try {
+    const session = await auth();
+
+    const response = await fetch('http://localhost:3001/address', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
+
+    if (!response.ok) return null;
+
+    const address = await response.json();
+
+    return address;
+  } catch (error) {
+    console.error('기본주소조회 실패', error);
+  }
+}
+
+export async function addAddress(address: TAddAddressForm) {
+  try {
+    const session = await auth();
+
+    const response = await fetch('http://localhost:3001/address', {
+      method: 'POST',
+      body: JSON.stringify({ address }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
+
+    if (!response.ok) return null;
+
+    return true;
+  } catch (error) {
+    console.error('새주소추가 실패', error);
   }
 }
 
