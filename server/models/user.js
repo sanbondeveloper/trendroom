@@ -6,14 +6,18 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     nickname: { type: String, required: true, unique: true },
     interests: { type: Array, default: [] },
+    addressList: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address',
+        default: [],
+      },
+    ],
     defaultAddress: {
-      name: { type: String },
-      phone: { type: String },
-      zipcode: { type: String },
-      address: { type: String },
-      details: { type: String },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Address',
+      default: null,
     },
-    addressList: { type: Array, default: [] },
   },
   {
     timestamps: true,
@@ -21,9 +25,9 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.statics.create = async function (payload) {
-  const todo = new this(payload);
+  const user = new this(payload);
 
-  return await todo.save();
+  return await user.save();
 };
 
 userSchema.statics.doubleCheck = async function ({ email, nickname }) {
@@ -44,20 +48,6 @@ userSchema.statics.interest = async function ({ userId, product }) {
     user.interests.splice(interests.indexOf(product.id), 1);
   } else {
     user.interests.push(product);
-  }
-
-  return await user.save();
-};
-
-userSchema.statics.addAddress = async function ({ userId, addressInfo }) {
-  const user = await this.findById(userId);
-  const id = user.addressList.length + 1;
-  const { checked, ...address } = addressInfo;
-
-  user.addressList.push({ ...address, id });
-
-  if (checked) {
-    user.defaultAddress = address;
   }
 
   return await user.save();
