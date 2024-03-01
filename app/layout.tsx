@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${nato_sans_kr.className} h-full bg-white`}>
-      <body className="h-full">
+      <body className="h-full pt-[100px]">
         <RecoilRootWrapper>{children}</RecoilRootWrapper>
         <div id="modal-root" />
       </body>

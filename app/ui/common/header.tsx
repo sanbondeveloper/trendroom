@@ -62,7 +62,6 @@ export default async function Header() {
           <CategoriesList categories={categories} />
         </div>
       </header>
-      <div className="h-24" />
     </>
   );
 }
