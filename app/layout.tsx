@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { nato_sans_kr } from '@/app/ui/fonts';
+import Script from 'next/script';
 import RecoilRootWrapper from './ui/common/recoil-root-wrapper';
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
         <RecoilRootWrapper>{children}</RecoilRootWrapper>
         <div id="modal-root" />
       </body>
+      <Script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" />
     </html>
   );
 }
