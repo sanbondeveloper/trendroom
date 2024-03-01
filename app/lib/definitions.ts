@@ -21,4 +21,4 @@ export interface IProduct {
 
 export type TProductCategories = keyof typeof PRODUCT_CATEGORIES;
 
-export type TAddAddressForm = z.infer<typeof AddressSchema>;
+export type TAddress = z.infer<typeof AddressSchema>;

@@ -2,7 +2,7 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressSchema } from '../../lib/schema';
-import { TAddAddressForm } from '@/app/lib/definitions';
+import { TAddress } from '@/app/lib/definitions';
 import ValidationMessage from '../auth/validation-message';
 import ZipcodeBtn from './zipcode-btn';
 import { addAddress } from '@/app/lib/actions';
@@ -12,7 +12,7 @@ export default function AddAddressForm({ onClose }: { onClose: () => void }) {
     formState: { errors, isValid },
     setValue,
     handleSubmit,
-  } = useForm<TAddAddressForm>({
+  } = useForm<TAddress>({
     mode: 'onChange',
     resolver: zodResolver(AddressSchema),
     defaultValues: { name: '', phone: '', zipcode: '', address: '', details: '' },
@@ -23,7 +23,7 @@ export default function AddAddressForm({ onClose }: { onClose: () => void }) {
     setValue('address', address);
   };
 
-  const onSubmit: SubmitHandler<TAddAddressForm> = async (data) => {
+  const onSubmit: SubmitHandler<TAddress> = async (data) => {
     await addAddress(data);
     onClose();
   };

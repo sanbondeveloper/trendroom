@@ -2,7 +2,7 @@
 
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { IProduct, TAddAddressForm } from './definitions';
+import { IProduct, TAddress } from './definitions';
 import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -96,7 +96,29 @@ export async function getDefaultAddress() {
   }
 }
 
-export async function addAddress(address: TAddAddressForm) {
+export async function getAddressList() {
+  try {
+    const session = await auth();
+
+    const response = await fetch('http://localhost:3001/addresses', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
+
+    if (!response.ok) return null;
+
+    const addresses = await response.json();
+
+    return addresses;
+  } catch (error) {
+    console.error('기본주소조회 실패', error);
+  }
+}
+
+export async function addAddress(address: TAddress) {
   try {
     const session = await auth();
 
