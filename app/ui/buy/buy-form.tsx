@@ -1,10 +1,20 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { IProduct } from '@/app/lib/definitions';
+import { IProduct, TAddress } from '@/app/lib/definitions';
 import ShippingAddress from './shipping-address';
 
-export default function BuyForm({ product, size }: { product: IProduct; size: string | null }) {
+export default function BuyForm({
+  product,
+  size,
+  defaultAddress,
+}: {
+  product: IProduct;
+  size: string | null;
+  defaultAddress: TAddress | null;
+}) {
   // const {
   //   register,
   //   formState: { errors },
@@ -35,7 +45,7 @@ export default function BuyForm({ product, size }: { product: IProduct; size: st
         </div>
       </div>
 
-      <ShippingAddress />
+      <ShippingAddress defaultAddress={defaultAddress} />
     </form>
   );
 }

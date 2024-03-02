@@ -27,11 +27,35 @@ router.post('/interest', async (req, res) => {
   }
 });
 
+router.get('/address', async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate('defaultAddress');
+
+    return res.status(200).json(user.defaultAddress);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json();
+  }
+});
+
+router.patch('/address', async (req, res) => {
+  try {
+    const { addressId } = req.body;
+    const user = await User.findById(req.user.id);
+
+    user.defaultAddress = addressId;
+    await user.save();
+
+    return res.status(200).json(user.defaultAddress);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json();
+  }
+});
+
 router.get('/addresses', async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate('addressList');
-
-    console.log(user.addressList);
 
     return res.status(200).json(user.addressList);
   } catch (error) {

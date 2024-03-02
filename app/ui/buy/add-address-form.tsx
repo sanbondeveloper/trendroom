@@ -6,7 +6,13 @@ import { TAddress } from '@/app/lib/definitions';
 import ValidationMessage from '../auth/validation-message';
 import ZipcodeBtn from './zipcode-btn';
 import { addAddress } from '@/app/lib/actions';
-export default function AddAddressForm({ onClose }: { onClose: () => void }) {
+export default function AddAddressForm({
+  onClose,
+  onShippingAddressChange,
+}: {
+  onClose: () => void;
+  onShippingAddressChange: (address: TAddress, checked: boolean) => void;
+}) {
   const {
     register,
     formState: { errors, isValid },
@@ -25,6 +31,7 @@ export default function AddAddressForm({ onClose }: { onClose: () => void }) {
 
   const onSubmit: SubmitHandler<TAddress> = async (data) => {
     await addAddress(data);
+    onShippingAddressChange(data, data.checked);
     onClose();
   };
 

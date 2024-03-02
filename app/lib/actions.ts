@@ -74,7 +74,7 @@ export async function interest(product: IProduct) {
   }
 }
 
-export async function getDefaultAddress() {
+export async function getDefaultAddress(): Promise<TAddress | null> {
   try {
     const session = await auth();
 
@@ -84,15 +84,20 @@ export async function getDefaultAddress() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${session?.accessToken}`,
       },
+      next: { tags: ['defaultAddress'] },
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      throw new Error('사용자 기본주소 조회 실패');
+    }
 
     const address = await response.json();
 
     return address;
   } catch (error) {
-    console.error('기본주소조회 실패', error);
+    console.error('Error fetching data:', error);
+
+    return null;
   }
 }
 
@@ -110,11 +115,11 @@ export async function getAddressList() {
 
     if (!response.ok) return null;
 
-    const addresses = await response.json();
+    const addressList = await response.json();
 
-    return addresses;
+    return addressList;
   } catch (error) {
-    console.error('기본주소조회 실패', error);
+    console.error('주소리스트조회 실패', error);
   }
 }
 
@@ -131,11 +136,46 @@ export async function addAddress(address: TAddress) {
       },
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      throw new Error('새 주소 추가 실패');
+    }
 
-    return true;
+    const newAddress = await response.json();
+
+    revalidateTag('defaultAddress');
+    return newAddress;
   } catch (error) {
-    console.error('새주소추가 실패', error);
+    console.error('Error fetching data:', error);
+
+    return null;
+  }
+}
+
+export async function changeDefaultAddress(addressId: string) {
+  try {
+    const session = await auth();
+
+    const response = await fetch('http://localhost:3001/address', {
+      method: 'PATCH',
+      body: JSON.stringify({ addressId }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('사용자 기본 주소 변경 실패');
+    }
+
+    const address = await response.json();
+
+    revalidateTag('defaultAddress');
+    return address;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+
+    return null;
   }
 }
 

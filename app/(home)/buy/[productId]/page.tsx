@@ -1,7 +1,7 @@
 import React from 'react';
 import { getProductById } from '@/app/lib/api';
-import { PlusIcon } from '@heroicons/react/24/outline';
 import BuyForm from '@/app/ui/buy/buy-form';
+import { getDefaultAddress } from '@/app/lib/actions';
 
 export default async function BuyPage({
   params,
@@ -12,12 +12,13 @@ export default async function BuyPage({
 }) {
   const { productId } = params;
   const product = await getProductById(productId);
+  const defaultAddress = await getDefaultAddress();
 
   if (!product) return <div>오류 발생</div>;
 
   return (
     <div className="flex h-full flex-col items-center bg-[#f4f4f4] pt-10">
-      <BuyForm product={product} size={searchParams?.size || null} />
+      <BuyForm product={product} size={searchParams?.size || null} defaultAddress={defaultAddress} />
 
       {/* <div className="mt-2 w-[700px] bg-white px-6 py-6">
         <div className="flex justify-between pb-3">
