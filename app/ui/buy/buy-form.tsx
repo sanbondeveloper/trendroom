@@ -8,6 +8,7 @@ import { BuySchema } from '@/app/lib/schema';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ShippingAddress from './shipping-address';
+import PaymentMethod from './payment-method';
 
 // type TBuyForm = { _id?: string } & z.infer<typeof BuySchema>;
 
@@ -51,6 +52,7 @@ export default function BuyForm({
       </div>
 
       <ShippingAddress defaultAddress={defaultAddress} />
+      <PaymentMethod />
     </form>
   );
 }
