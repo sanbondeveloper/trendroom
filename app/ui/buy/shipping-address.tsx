@@ -2,6 +2,7 @@ import React, { useOptimistic } from 'react';
 import { TAddress } from '@/app/lib/definitions';
 import AddAddressModal from './add-address-modal';
 import ChangeAddressModal from './chage-address-modal';
+import ShippingRequestModal from './shipping-request-modal';
 export default function ShippingAddress({ defaultAddress }: { defaultAddress: TAddress | null }) {
   const [shippingAddress, setShippingAddress] = useOptimistic(defaultAddress, (state, newAddress: TAddress) => ({
     ...state,
@@ -36,6 +37,9 @@ export default function ShippingAddress({ defaultAddress }: { defaultAddress: TA
           </div>
         </div>
         <ChangeAddressModal defaultAddress={shippingAddress} onShippingAddressChange={handleShippingAddressChange} />
+      </div>
+      <div className="mt-3">
+        <ShippingRequestModal />
       </div>
     </div>
   );

@@ -4,7 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { IProduct, TAddress } from '@/app/lib/definitions';
+import { BuySchema } from '@/app/lib/schema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import ShippingAddress from './shipping-address';
+
+// type TBuyForm = { _id?: string } & z.infer<typeof BuySchema>;
 
 export default function BuyForm({
   product,
@@ -18,10 +23,10 @@ export default function BuyForm({
   // const {
   //   register,
   //   formState: { errors },
-  // } = useForm<TLoginForm>({
+  // } = useForm<TBuyForm>({
   //   mode: 'onChange',
-  //   resolver: zodResolver(LoginSchema),
-  //   defaultValues: { email: '', password: '' },
+  //   resolver: zodResolver(BuySchema),
+  //   defaultValues: { address: defaultAddress || { name: '', phone: '', zipcode: '', address: '', details: '' } },
   // });
 
   return (

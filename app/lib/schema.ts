@@ -34,3 +34,7 @@ export const AddressSchema = z.object({
   details: z.string().min(1),
   checked: z.boolean(),
 });
+
+export const BuySchema = z.object({
+  address: AddressSchema.omit({ checked: true }),
+});
