@@ -12,6 +12,7 @@ import ShippingRequestModal from './shipping-request-modal';
 import PaymentMethod from './payment-method';
 import OrderInformation from './order-information';
 import { REQUEST_TEXT_LIST } from '@/app/lib/constants';
+import { order } from '@/app/lib/actions';
 
 export default function BuyForm({
   product,
@@ -37,7 +38,9 @@ export default function BuyForm({
     },
   });
 
-  const onSubmit: SubmitHandler<TBuyForm> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<TBuyForm> = async (data) => {
+    await order(data);
+  };
 
   return (
     <form className="pb-20" onSubmit={handleSubmit(onSubmit)}>

@@ -2,7 +2,7 @@
 
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { IProduct, TAddress } from './definitions';
+import { IProduct, TAddress, TBuyForm } from './definitions';
 import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -172,6 +172,34 @@ export async function changeDefaultAddress(addressId: string) {
 
     // revalidateTag('defaultAddress');
     return address;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+
+    return null;
+  }
+}
+
+export async function order(orderInfo: TBuyForm) {
+  try {
+    const session = await auth();
+
+    const response = await fetch('http://localhost:3001/order', {
+      method: 'POST',
+      body: JSON.stringify({ orderInfo }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('주문 결제 실패');
+    }
+
+    const order = await response.json();
+
+    return order;
+    // redirect('/');
   } catch (error) {
     console.error('Error fetching data:', error);
 

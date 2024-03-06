@@ -18,6 +18,13 @@ const userSchema = new mongoose.Schema(
       ref: 'Address',
       default: null,
     },
+    orderHistory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+        default: [],
+      },
+    ],
   },
   {
     timestamps: true,

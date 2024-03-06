@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
+const order = require('./routes/order');
 const { JwtMiddleware } = require('./lib/middleware');
 
 const app = express();
@@ -26,6 +27,7 @@ mongoose
 app.use(auth);
 app.use(JwtMiddleware);
 app.use(user);
+app.use(order);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT} port`);
