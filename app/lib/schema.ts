@@ -23,27 +23,32 @@ export const RegisterSchema = LoginSchema.extend({
   message: '비밀번호가 일치하지 않습니다',
 });
 
-export const AddressSchema = z.object({
-  name: z
-    .string({ required_error: '이름을 입력해주세요' })
-    .min(2, { message: '올바른 이름을 입력해주세요. (2 - 50자)' })
-    .max(50, { message: '올바른 이름을 입력해주세요. (2 - 50자)' }),
-  phone: z.string().regex(phoneRegex, '정확한 휴대폰 번호를 입력해주세요.'),
-  zipcode: z.string().min(1),
-  address: z.string().min(1),
-  details: z.string().min(1),
-  checked: z.boolean(),
-});
+export const AddressSchema = z
+  .object({
+    name: z
+      .string({ required_error: '이름을 입력해주세요' })
+      .min(2, { message: '올바른 이름을 입력해주세요. (2 - 50자)' })
+      .max(50, { message: '올바른 이름을 입력해주세요. (2 - 50자)' }),
+    phone: z.string().regex(phoneRegex, '정확한 휴대폰 번호를 입력해주세요.'),
+    zipcode: z.string().min(1),
+    address: z.string().min(1),
+    details: z.string().min(1),
+    checked: z.boolean(),
+  })
+  .partial({ checked: true });
 
 export const BuySchema = z.object({
+  address: AddressSchema.omit({ checked: true }),
   product: z
     .object({
       id: z.number(),
       size: z.string(),
     })
     .required(),
-  address: AddressSchema,
-  message: z.string().min(1),
+  message: z.object({
+    id: z.number(),
+    text: z.string(),
+  }),
   payment: z
     .object({
       type: z.string(),

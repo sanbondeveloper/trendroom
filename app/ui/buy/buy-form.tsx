@@ -1,16 +1,17 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { IProduct, TAddress, TBuyForm } from '@/app/lib/definitions';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { IProduct, TAddress, TBuyForm, TSize } from '@/app/lib/definitions';
 import { BuySchema } from '@/app/lib/schema';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { dollarToWon } from '@/app/lib/util';
+import ProductInfo from './product-info';
 import ShippingAddress from './shipping-address';
+import ShippingRequestModal from './shipping-request-modal';
 import PaymentMethod from './payment-method';
 import OrderInformation from './order-information';
-import { dollarToWon } from '@/app/lib/util';
+import { REQUEST_TEXT_LIST } from '@/app/lib/constants';
 
 export default function BuyForm({
   product,
@@ -18,45 +19,51 @@ export default function BuyForm({
   defaultAddress,
 }: {
   product: IProduct;
-  size: string;
+  size: TSize;
   defaultAddress: TAddress | null;
 }) {
   const {
     formState: { errors, isValid },
+    control,
+    handleSubmit,
   } = useForm<TBuyForm>({
     mode: 'onChange',
     resolver: zodResolver(BuySchema),
     defaultValues: {
       product: { id: product.id, size },
       address: defaultAddress || undefined,
-      payment: { amount: product.price },
-      message: '요청사항 없음',
+      payment: { amount: dollarToWon(product.price) },
+      message: REQUEST_TEXT_LIST[0],
     },
   });
 
-  return (
-    <form className="pb-20">
-      <div className="w-[700px] bg-white px-6 py-6">
-        <div className="flex">
-          <div className="flex items-center justify-center rounded-md border px-3 py-3">
-            <div className="relative h-14 w-14">
-              <Image fill src={product.image || ''} alt={product.title} sizes="56px" className="object-contain" />
-            </div>
-          </div>
-          <div className="ml-3 flex flex-col justify-center">
-            <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold leading-4">TrendRoom</div>
-            <div className="mt-[1px] overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-4">
-              {product.title}
-            </div>
-            <div className="mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold leading-4">
-              {size}
-            </div>
-          </div>
-        </div>
-      </div>
+  const onSubmit: SubmitHandler<TBuyForm> = (data) => console.log(data);
 
-      <ShippingAddress defaultAddress={defaultAddress} />
-      <PaymentMethod />
+  return (
+    <form className="pb-20" onSubmit={handleSubmit(onSubmit)}>
+      <ProductInfo product={product} size={size} />
+      <Controller
+        name="address"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <ShippingAddress address={value} onAddressChange={onChange}>
+            <Controller
+              name="message"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <ShippingRequestModal message={value} onMessageChange={onChange} />
+              )}
+            />
+          </ShippingAddress>
+        )}
+      />
+
+      <Controller
+        name="payment"
+        control={control}
+        render={({ field: { value, onChange } }) => <PaymentMethod payment={value} onPaymentChange={onChange} />}
+      />
+
       <OrderInformation price={dollarToWon(product.price).toLocaleString()} />
 
       <button

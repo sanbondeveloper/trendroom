@@ -17,9 +17,9 @@ export const REQUEST_TEXT_LIST = [
 ];
 
 export const PAYMENT_METHOD_LIST = [
-  { id: 1, method: 'card', title: '신용카드' },
-  { id: 2, method: 'naverpay', title: '네이버페이' },
-  { id: 3, method: 'kakaopay', title: '카카오페이' },
-  { id: 4, method: 'tosspay', title: '토스페이' },
-  { id: 5, method: 'payco', title: '페이코' },
+  { method: 'card', title: '신용카드' },
+  { method: 'naverpay', title: '네이버페이' },
+  { method: 'kakaopay', title: '카카오페이' },
+  { method: 'tosspay', title: '토스페이' },
+  { method: 'payco', title: '페이코' },
 ] as const;

@@ -1,14 +1,15 @@
 import React from 'react';
+import { TSize } from '@/app/lib/definitions';
 import { getProductById } from '@/app/lib/api';
-import BuyForm from '@/app/ui/buy/buy-form';
 import { getDefaultAddress } from '@/app/lib/actions';
+import BuyForm from '@/app/ui/buy/buy-form';
 
 export default async function BuyPage({
   params,
   searchParams,
 }: {
   params: { productId: number };
-  searchParams: { size: string };
+  searchParams: { size: TSize };
 }) {
   const { productId } = params;
   const product = await getProductById(productId);

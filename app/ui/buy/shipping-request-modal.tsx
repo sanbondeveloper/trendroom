@@ -5,10 +5,15 @@ import Modal from '../common/modal';
 import ShippingRequestList from './shipping-request-list';
 import ModalBottomBtn from '../common/modal-bottom-btn';
 
-function ShippingRequestModal() {
+function ShippingRequestModal({
+  message,
+  onMessageChange,
+}: {
+  message: { id: number; text: string };
+  onMessageChange: (message: { id: number; text: string }) => void;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [shippingRequest, setShippingRequest] = useState(REQUEST_TEXT_LIST[0]);
-  const [activeId, setActiveId] = useState(1);
+  const [activeId, setActiveId] = useState(message.id);
   const [textareaInput, setTextareaInput] = useState('');
 
   const handleClose = () => {
@@ -17,21 +22,21 @@ function ShippingRequestModal() {
 
   const handleShippingRequestChange = () => {
     if (activeId === 5) {
-      setShippingRequest({ id: 5, text: textareaInput });
+      onMessageChange({ id: 5, text: textareaInput });
     } else {
-      setShippingRequest(REQUEST_TEXT_LIST[activeId - 1]);
+      onMessageChange(REQUEST_TEXT_LIST[activeId - 1]);
     }
     handleClose();
   };
 
   return (
-    <>
+    <div className="mt-3">
       <button
         type="button"
         className="flex w-full items-center justify-between rounded-xl border border-[#ebebeb] px-3 py-3 text-sm"
         onClick={() => setIsModalOpen(true)}
       >
-        <span>{shippingRequest.text}</span>
+        <span>{message.text}</span>
         <ChevronRightIcon className="h-4 w-4" />
       </button>
 
@@ -54,7 +59,7 @@ function ShippingRequestModal() {
           />
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
 

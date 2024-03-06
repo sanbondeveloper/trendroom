@@ -3,7 +3,7 @@ import React from 'react';
 export default function OrderInformation({ price }: { price: string }) {
   return (
     <>
-      <div className="mt-2 w-[700px] bg-[#fff] px-6 py-6">
+      <div className="box-white mt-2">
         <h3 className="mb-2 text-lg font-semibold leading-5 ">최종 주문정보</h3>
         <ul>
           <li className="flex justify-between text-sm">

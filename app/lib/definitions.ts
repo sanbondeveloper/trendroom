@@ -19,6 +19,8 @@ export interface IProduct {
   rating: { rate: number; count: number };
 }
 
+export type TSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL';
+
 export type TProductCategories = keyof typeof PRODUCT_CATEGORIES;
 
 export type TAddress = { _id?: string } & z.infer<typeof AddressSchema>;

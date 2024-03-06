@@ -170,7 +170,7 @@ export async function changeDefaultAddress(addressId: string) {
 
     const address = await response.json();
 
-    revalidateTag('defaultAddress');
+    // revalidateTag('defaultAddress');
     return address;
   } catch (error) {
     console.error('Error fetching data:', error);
