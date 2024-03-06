@@ -6,6 +6,8 @@ export const PRODUCT_CATEGORIES = {
   all: '전체',
 } as const;
 
+export const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'] as const;
+
 export const REQUEST_TEXT_LIST = [
   { id: 1, text: '요청사항 없음' },
   { id: 2, text: '문 앞에 놓아주세요' },

@@ -1,7 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-
-const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+import { SIZES } from '@/app/lib/constants';
 
 interface ISizesRadioGroupProps {
   selectedSize: string;
