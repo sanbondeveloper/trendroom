@@ -8,7 +8,7 @@ export default async function BuyPage({
   searchParams,
 }: {
   params: { productId: number };
-  searchParams: { size?: string };
+  searchParams: { size: string };
 }) {
   const { productId } = params;
   const product = await getProductById(productId);
@@ -17,8 +17,8 @@ export default async function BuyPage({
   if (!product) return <div>오류 발생</div>;
 
   return (
-    <div className="flex h-full flex-col items-center bg-[#f4f4f4] pt-10">
-      <BuyForm product={product} size={searchParams?.size || null} defaultAddress={defaultAddress} />
+    <div className="flex h-fit flex-col items-center bg-[#f4f4f4] pt-10">
+      <BuyForm product={product} size={searchParams.size} defaultAddress={defaultAddress} />
     </div>
   );
 }

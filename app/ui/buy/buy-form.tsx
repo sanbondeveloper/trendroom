@@ -3,14 +3,14 @@
 import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { IProduct, TAddress } from '@/app/lib/definitions';
+import { IProduct, TAddress, TBuyForm } from '@/app/lib/definitions';
 import { BuySchema } from '@/app/lib/schema';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ShippingAddress from './shipping-address';
 import PaymentMethod from './payment-method';
-
-// type TBuyForm = { _id?: string } & z.infer<typeof BuySchema>;
+import OrderInformation from './order-information';
+import { dollarToWon } from '@/app/lib/util';
 
 export default function BuyForm({
   product,
@@ -18,20 +18,24 @@ export default function BuyForm({
   defaultAddress,
 }: {
   product: IProduct;
-  size: string | null;
+  size: string;
   defaultAddress: TAddress | null;
 }) {
-  // const {
-  //   register,
-  //   formState: { errors },
-  // } = useForm<TBuyForm>({
-  //   mode: 'onChange',
-  //   resolver: zodResolver(BuySchema),
-  //   defaultValues: { address: defaultAddress || { name: '', phone: '', zipcode: '', address: '', details: '' } },
-  // });
+  const {
+    formState: { errors, isValid },
+  } = useForm<TBuyForm>({
+    mode: 'onChange',
+    resolver: zodResolver(BuySchema),
+    defaultValues: {
+      product: { id: product.id, size },
+      address: defaultAddress || undefined,
+      payment: { amount: product.price },
+      message: '요청사항 없음',
+    },
+  });
 
   return (
-    <form>
+    <form className="pb-20">
       <div className="w-[700px] bg-white px-6 py-6">
         <div className="flex">
           <div className="flex items-center justify-center rounded-md border px-3 py-3">
@@ -53,6 +57,15 @@ export default function BuyForm({
 
       <ShippingAddress defaultAddress={defaultAddress} />
       <PaymentMethod />
+      <OrderInformation price={dollarToWon(product.price).toLocaleString()} />
+
+      <button
+        type="submit"
+        disabled={!isValid}
+        className="mt-6 h-[55px] w-full rounded-xl border bg-black text-lg font-bold text-white disabled:bg-[#ebebeb]"
+      >
+        {'결제하기'}
+      </button>
     </form>
   );
 }

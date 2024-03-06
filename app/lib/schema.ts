@@ -36,5 +36,18 @@ export const AddressSchema = z.object({
 });
 
 export const BuySchema = z.object({
-  address: AddressSchema.omit({ checked: true }),
+  product: z
+    .object({
+      id: z.number(),
+      size: z.string(),
+    })
+    .required(),
+  address: AddressSchema,
+  message: z.string().min(1),
+  payment: z
+    .object({
+      type: z.string(),
+      amount: z.number(),
+    })
+    .required(),
 });

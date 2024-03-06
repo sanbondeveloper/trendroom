@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { REQUEST_TEXT_LIST } from '@/app/lib/constants';
 import Modal from '../common/modal';
@@ -9,7 +9,7 @@ function ShippingRequestModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [shippingRequest, setShippingRequest] = useState(REQUEST_TEXT_LIST[0]);
   const [activeId, setActiveId] = useState(1);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [textareaInput, setTextareaInput] = useState('');
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -17,7 +17,7 @@ function ShippingRequestModal() {
 
   const handleShippingRequestChange = () => {
     if (activeId === 5) {
-      setShippingRequest({ id: 5, text: textareaRef.current?.value || '' });
+      setShippingRequest({ id: 5, text: textareaInput });
     } else {
       setShippingRequest(REQUEST_TEXT_LIST[activeId - 1]);
     }
@@ -40,15 +40,15 @@ function ShippingRequestModal() {
         {activeId === 5 && (
           <textarea
             maxLength={40}
-            ref={textareaRef}
             placeholder="내용을 입력해주세요.(최대 40자)"
             className="w-full resize-none rounded-lg border border-[#ebebeb] px-3 py-3 text-sm"
+            onChange={(e) => setTextareaInput(e.target.value)}
           />
         )}
         <div className="mt-6">
           <ModalBottomBtn
             okText="적용하기"
-            isValid={true}
+            isValid={!(activeId === 5 && !textareaInput)}
             onClose={handleClose}
             onShippingRequestChange={handleShippingRequestChange}
           />

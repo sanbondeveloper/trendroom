@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { PAYMENT_METHOD_LIST } from '@/app/lib/constants';
 import clsx from 'clsx';
-import React, { useState } from 'react';
 
 function PaymentMethod() {
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -17,7 +17,9 @@ function PaymentMethod() {
               'border=[#d3d3d3] flex h-[60px] w-[156px] cursor-pointer items-center rounded-lg border bg-white px-[10px] py-[16px]',
               { 'border-2 border-black': activeId === id },
             )}
-            onClick={() => setActiveId(id)}
+            onClick={() => {
+              setActiveId(id);
+            }}
           >
             <span className="text-xs">{title}</span>
           </li>
