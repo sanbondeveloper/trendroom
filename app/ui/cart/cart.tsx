@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { cartState } from '@/app/atoms/cartState';
-import Image from 'next/image';
 import { dollarToWon } from '@/app/lib/util';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { cartState } from '@/app/store/atoms';
+import useSSR from '@/app/hooks/useSSR';
+import Image from 'next/image';
 
 export default function Cart() {
-  const [cart, setCart] = useRecoilState(cartState);
+  const [cart] = useSSR({ state: cartState, defaultValue: [] });
 
   return (
     <div className="mx-auto mt-11 max-w-2xl">

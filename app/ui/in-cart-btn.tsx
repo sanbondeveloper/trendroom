@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { cartLenState } from '../selectors/cartLenState';
+import { cartCountState } from '../store/selectors';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import useSelectorSSR from '../hooks/useSelectorSSR';
 
 export default function InCartBtn() {
-  const count = useRecoilValue(cartLenState);
+  const count = useSelectorSSR({ state: cartCountState, defaultValue: 0 });
 
   return (
     <Link href="/cart" className="relative cursor-pointer">

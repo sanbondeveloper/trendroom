@@ -6,7 +6,6 @@ import SizesModal from '@/app/ui/detail/sizes-modal';
 import Image from 'next/image';
 import { IProduct } from '@/app/lib/definitions';
 import CartButton from './cart-button';
-import CartWrapper from '../cart/cart-wrapper';
 import BuyBtn from './buy-btn';
 
 export default function ProductDetail({ product }: { product: IProduct }) {
@@ -17,32 +16,30 @@ export default function ProductDetail({ product }: { product: IProduct }) {
   };
 
   return (
-    <CartWrapper>
-      <div className="mx-auto mt-11 max-w-5xl">
-        <div className="flex items-center">
-          <div className="mr-10 flex flex-1 justify-center rounded-lg border py-28">
-            <div className="relative h-52 w-52">
-              <Image fill src={product.image} alt={product.title} sizes="288px" className="object-contain" />
-            </div>
-          </div>
-          <div className="flex-1">
-            <div className="mb-3">
-              <div className="text-sm">구매가</div>
-              <div className="text-2xl font-bold">{dollarToWon(product.price).toLocaleString() + '원'}</div>
-            </div>
-            <div className="mb-4 text-lg">{product.title}</div>
-            <SizesModal size={size} onSizeChange={handleSizeChange} />
-            <div className="mb-5 flex flex-col">
-              <div className="flex w-full ">
-                <BuyBtn productId={product.id} size={size} />
-                <CartButton product={product} size={size} />
-              </div>
-              <button className="border-1 mt-2 rounded-md border-[#ccc] px-3 py-3">관심상품 72</button>
-            </div>
-            <div>{product.description}</div>
+    <div className="mx-auto mt-11 max-w-5xl">
+      <div className="flex items-center">
+        <div className="mr-10 flex flex-1 justify-center rounded-lg border py-28">
+          <div className="relative h-52 w-52">
+            <Image fill src={product.image} alt={product.title} sizes="288px" className="object-contain" />
           </div>
         </div>
+        <div className="flex-1">
+          <div className="mb-3">
+            <div className="text-sm">구매가</div>
+            <div className="text-2xl font-bold">{dollarToWon(product.price).toLocaleString() + '원'}</div>
+          </div>
+          <div className="mb-4 text-lg">{product.title}</div>
+          <SizesModal size={size} onSizeChange={handleSizeChange} />
+          <div className="mb-5 flex flex-col">
+            <div className="flex w-full ">
+              <BuyBtn productId={product.id} size={size} />
+              <CartButton product={product} size={size} />
+            </div>
+            <button className="border-1 mt-2 rounded-md border-[#ccc] px-3 py-3">관심상품 72</button>
+          </div>
+          <div>{product.description}</div>
+        </div>
       </div>
-    </CartWrapper>
+    </div>
   );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { IProduct } from '@/app/lib/definitions';
-import { useRecoilState } from 'recoil';
-import { cartState } from '@/app/atoms/cartState';
+import { cartState } from '@/app/store/atoms';
+import useSSR from '@/app/hooks/useSSR';
 
 interface ICartButtonProps {
   product: IProduct;
   size: string;
 }
 export default function CartButton({ product, size }: ICartButtonProps) {
-  const [cart, setCart] = useRecoilState(cartState);
+  const [cart, setCart] = useSSR({ state: cartState, defaultValue: [] });
 
   const handleCardAdd = () => {
     const isExist = cart.some((item) => item.product.id === product.id);

@@ -5,7 +5,6 @@ import Link from 'next/link';
 import CategoriesList from '../categories-list';
 import SearchModal from '../search/search-modal';
 import InCartBtn from '../in-cart-btn';
-import CartWrapper from '../cart/cart-wrapper';
 
 export default async function Header() {
   const session = await auth();
@@ -53,9 +52,7 @@ export default async function Header() {
                 <SearchModal products={products} />
               </li>
               <li className="flex items-center">
-                <CartWrapper>
-                  <InCartBtn />
-                </CartWrapper>
+                <InCartBtn />
               </li>
             </ul>
           </div>
