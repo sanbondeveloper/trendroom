@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColumnDef, useReactTable, getCoreRowModel } from '@tanstack/react-table';
+import { ColumnDef, useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
 
 type TUser = {
   name: string;
@@ -13,24 +13,26 @@ interface ITableProps {
 }
 export default function Table({ columns, data }: ITableProps) {
   const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
-
-  console.log(table.getHeaderGroups());
+  const headerGroups = table.getHeaderGroups();
+  const { rows } = table.getRowModel();
 
   return (
     <table>
       <thead>
-        <tr>
-          {columns.map((column, idx) => (
-            <th key={idx}>{column.id}</th>
-          ))}
-        </tr>
+        {headerGroups.map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <th key={header.id}>{flexRender(header.column.columnDef.header, header.getContext())}</th>
+            ))}
+          </tr>
+        ))}
       </thead>
       <tbody>
-        {data.map(({ name, email, phone }) => (
-          <tr key={name + email + phone}>
-            <td>{name}</td>
-            <td>{email}</td>
-            <td>{phone}</td>
+        {rows.map((row) => (
+          <tr key={row.id}>
+            {row.getVisibleCells().map((cell) => (
+              <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+            ))}
           </tr>
         ))}
       </tbody>

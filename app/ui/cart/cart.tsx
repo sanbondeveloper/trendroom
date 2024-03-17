@@ -15,16 +15,19 @@ export default function Cart() {
   const columns = useMemo(
     () => [
       {
+        id: 'name',
+        header: '이름',
         accessorKey: 'name',
-        Header: 'Name',
       },
       {
+        id: 'email',
+        header: '이메일',
         accessorKey: 'email',
-        Header: 'Email',
       },
       {
+        id: 'phone',
+        header: '전화번호',
         accessorKey: 'phone',
-        Header: 'Phone',
       },
     ],
     [],
