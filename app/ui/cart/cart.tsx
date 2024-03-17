@@ -1,17 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { dollarToWon } from '@/app/lib/util';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { cartState } from '@/app/store/atoms';
+import { faker } from '@faker-js/faker';
 import useSSR from '@/app/hooks/useSSR';
 import Image from 'next/image';
+import Table from './Table';
 
 export default function Cart() {
+  faker.seed(123);
   const [cart] = useSSR({ state: cartState, defaultValue: [] });
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'name',
+        Header: 'Name',
+      },
+      {
+        accessorKey: 'email',
+        Header: 'Email',
+      },
+      {
+        accessorKey: 'phone',
+        Header: 'Phone',
+      },
+    ],
+    [],
+  );
+  const data = Array(53)
+    .fill(null)
+    .map(() => ({
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      phone: faker.phone.number(),
+    }));
 
   return (
     <div className="mx-auto mt-11 max-w-2xl">
+      <Table columns={columns} data={data} />
       {cart.map(({ product, size, quantity }, idx) => (
         <div key={idx} className="relative flex items-center border">
           <button className="absolute right-0 top-0">

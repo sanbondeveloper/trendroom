@@ -196,15 +196,14 @@ export async function order(orderInfo: TBuyForm) {
       throw new Error('주문 결제 실패');
     }
 
-    const order = await response.json();
-
-    return order;
-    // redirect('/');
+    // const order = await response.json();
   } catch (error) {
     console.error('Error fetching data:', error);
 
     return null;
   }
+
+  redirect('/');
 }
 
 export async function checkSession() {

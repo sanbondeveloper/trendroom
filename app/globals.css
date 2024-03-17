@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .box-white {
+    @apply w-[700px] bg-white px-6 py-6;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* user-select: none; */
 }
 
 html,
