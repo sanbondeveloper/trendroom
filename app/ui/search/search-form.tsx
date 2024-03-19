@@ -7,12 +7,13 @@ import clsx from 'clsx';
 
 interface ISearchFormProps {
   products: IProduct[];
+  focusIndex: number;
   onQueryChange: (newQuery: string) => void;
   onResultChange: (newResult: IProduct[]) => void;
   onClose: () => void;
 }
 
-export default function SearchForm({ products, onQueryChange, onResultChange, onClose }: ISearchFormProps) {
+export default function SearchForm({ products, focusIndex, onQueryChange, onResultChange, onClose }: ISearchFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { push } = useRouter();
 
@@ -26,7 +27,7 @@ export default function SearchForm({ products, onQueryChange, onResultChange, on
 
   const handleSubmit = () => {
     const query = inputRef.current?.value;
-    if (!query) return;
+    if (!query || focusIndex !== -1) return;
 
     push(`/?query=${query}`);
     updateRecentSearches(query);
@@ -64,6 +65,7 @@ export default function SearchForm({ products, onQueryChange, onResultChange, on
             onQueryChange('');
             onResultChange([]);
           }}
+          tabIndex={-1}
         >
           <XCircleIcon className="h-5 w-5" />
         </button>

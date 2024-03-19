@@ -1,34 +1,42 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IProduct } from '../../lib/definitions';
-import SearchHighlight from './search-highlight';
 import { useRouter } from 'next/navigation';
+import ResultItem from './result-item';
 
 interface ISearchResultProps {
   result: IProduct[];
   query: string;
   onClose: () => void;
+  focusIndex: number;
 }
 
-export default function SearchResult({ result, query, onClose }: ISearchResultProps) {
+export default function SearchResult({ result, query, onClose, focusIndex }: ISearchResultProps) {
+  const scrollRef = useRef<HTMLLIElement>(null);
   const { push } = useRouter();
+
+  useEffect(() => {
+    if (focusIndex === -1) return;
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [focusIndex]);
 
   if (query === '') return null;
 
   return (
-    <ul className="absolute top-24 h-[800px] w-full overflow-auto bg-white pt-2 text-sm">
-      {result.map((product) => (
-        <li key={product.id} className="py-4">
-          <div
-            onClick={() => {
-              push(`/products/${product.id}`);
-              onClose();
-            }}
-            className="w-fit cursor-pointer"
-          >
-            <SearchHighlight text={product.title} query={query} />
-          </div>
-        </li>
-      ))}
+    <ul className="absolute top-24  h-[700px] w-full overflow-auto bg-white pt-2 text-sm">
+      {result.length > 0 ? (
+        result.map((product, idx) => (
+          <ResultItem
+            key={product.id}
+            product={product}
+            isFocus={focusIndex === idx}
+            scrollRef={scrollRef}
+            onClose={onClose}
+            query={query}
+          />
+        ))
+      ) : (
+        <span>검색결과가 없습니다.</span>
+      )}
     </ul>
   );
 }
