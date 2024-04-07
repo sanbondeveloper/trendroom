@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-function LoginFooter() {
+function LoginOthers() {
   return (
-    <footer className="mt-4 flex flex-col px-7">
+    <div className="mt-4 flex flex-col">
       <Link className="bg-kakao-yellow flex h-[45px] items-center justify-center" href="#">
         <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
           <title>kakao 로고</title>
@@ -27,12 +27,8 @@ function LoginFooter() {
         </svg>
         Apple 로그인
       </Link>
-
-      <p className="mt-4">
-        <Link href="#">회원가입</Link>
-      </p>
-    </footer>
+    </div>
   );
 }
 
-export default LoginFooter;
+export default LoginOthers;

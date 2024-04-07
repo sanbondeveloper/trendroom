@@ -1,10 +1,13 @@
 'use client';
 
-import LoginFooter from '@/components/login/login-footer';
+import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+
 import LoginForm from '@/components/login/login-form';
 import LoginHeader from '@/components/login/login-header';
 import Tab from '@/components/tab';
-import { useCallback, useState } from 'react';
+import OrderInquiry from '@/components/login/order-inquiry';
+import clsx from 'clsx';
 
 const items = [
   { id: 1, label: '가입 회원' },
@@ -23,8 +26,17 @@ function LoginPage() {
       <div className="m-auto h-full max-w-[450px] bg-white">
         <LoginHeader />
         <Tab items={items} tabIndex={tabIndex} onTabIndexChange={handleTabIndexChange} />
-        {tabIndex === 1 && <LoginForm />}
-        <LoginFooter />
+        <div className={clsx('', { hidden: tabIndex !== 1 })}>
+          <LoginForm />
+        </div>
+        <div className={clsx('', { hidden: tabIndex !== 2 })}>
+          <OrderInquiry />
+        </div>
+        <footer className="mt-4 px-7">
+          <p>
+            <Link href="#">회원가입</Link>
+          </p>
+        </footer>
       </div>
     </main>
   );
