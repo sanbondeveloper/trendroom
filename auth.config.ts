@@ -9,11 +9,10 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       const isOnLoginPage = nextUrl.pathname.startsWith('/login');
       const isOnRegisterPage = nextUrl.pathname.startsWith('/register');
-
-      // if(nextUrl.searchParams.get('back')) return Response.;
+      const isOnBuyPage = nextUrl.pathname.startsWith('/buy');
 
       if ((isOnLoginPage || isOnRegisterPage) && isLoggedIn) return Response.redirect(new URL('/', nextUrl));
-      if (isOnRegisterPage && !isLoggedIn) return true;
+      if (isOnBuyPage && !isLoggedIn) return Response.redirect(new URL('/login', nextUrl));
 
       return true;
     },
