@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { auth } from '@/auth';
 
 import LoginForm from '@/components/login/login-form';
 import LoginHeader from '@/components/login/login-header';
@@ -22,7 +23,7 @@ function LoginPage() {
   }, []);
 
   return (
-    <main className="bg-main-grey h-screen">
+    <main className="h-screen bg-main-grey">
       <div className="m-auto h-full max-w-[450px] bg-white">
         <LoginHeader />
         <Tab items={items} tabIndex={tabIndex} onTabIndexChange={handleTabIndexChange} />

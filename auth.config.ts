@@ -2,17 +2,13 @@ import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
   pages: {
-    signIn: '/login',
+    signIn: '/auth/login',
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnLoginPage = nextUrl.pathname.startsWith('/login');
-      const isOnRegisterPage = nextUrl.pathname.startsWith('/register');
-      const isOnBuyPage = nextUrl.pathname.startsWith('/buy');
 
-      if ((isOnLoginPage || isOnRegisterPage) && isLoggedIn) return Response.redirect(new URL('/', nextUrl));
-      if (isOnBuyPage && !isLoggedIn) return Response.redirect(new URL('/login', nextUrl));
+      console.log('isLoggedIn', isLoggedIn);
 
       return true;
     },
@@ -32,6 +28,6 @@ export const authConfig = {
   },
   providers: [],
   session: {
-    maxAge: 60 * 60 * 24,
+    strategy: 'jwt',
   },
 } satisfies NextAuthConfig;

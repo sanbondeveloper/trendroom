@@ -2,8 +2,16 @@ import { z } from 'zod';
 import { AddressSchema, BuySchema } from './schema';
 import { PRODUCT_CATEGORIES } from './constants';
 
+export interface User {
+  email?: string;
+  nick: string;
+  provider: 'local' | 'kakao' | 'apple';
+  snsId?: string;
+  accessToken: string;
+}
+
 export interface IUser {
-  // email: string;
+  email: string;
   username: string;
   id: string;
   accessToken: string;

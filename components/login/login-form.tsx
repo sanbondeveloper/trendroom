@@ -1,14 +1,17 @@
 import { useCallback, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 
 import PasswordVisibleToggle from './password-visible-toggle';
 import InputClearBtn from './input-clear-btn';
 import LoginOthers from './login-others';
+import { authenticate } from '@/lib/actions';
 
 function LoginForm() {
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [autoLogin, setAutoLogin] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
   const handleisVisibleChange = useCallback(() => {
     setIsPasswordVisible((prev) => !prev);
@@ -18,32 +21,21 @@ function LoginForm() {
     setPasswordInput('');
   }, []);
 
-  const handleSumbit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!emailInput) {
-      return alert('아이디를 입력해주세요.');
-    }
-
-    if (!passwordInput) {
-      return alert('비밀번호를 입력해주세요.');
-    }
-  };
-
   return (
-    <form className="px-7" onSubmit={handleSumbit}>
+    <form className="px-7" action={dispatch}>
       <div>
-        <label htmlFor="id" />
+        <label htmlFor="email" />
         <input
           className="w-full"
-          type="text"
-          name="id"
-          id="id"
-          placeholder="아이디"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="이메일"
           value={emailInput}
           onChange={(e) => setEmailInput(e.target.value)}
         />
       </div>
+
       <div className="relative mt-2">
         <label htmlFor="password" />
         <input
@@ -62,9 +54,11 @@ function LoginForm() {
         )}
         <PasswordVisibleToggle isVisible={isPasswordVisible} onisVisibleChange={handleisVisibleChange} />
       </div>
+
       <div>
-        <button className="mt-3 h-[50px] w-full bg-black text-white">로그인</button>
+        <LoginButton />
       </div>
+
       <div className="mt-5 flex items-center justify-between">
         <div className="flex items-center">
           <input
@@ -78,6 +72,7 @@ function LoginForm() {
             자동 로그인
           </label>
         </div>
+
         <ul className="flex text-sm">
           <li>아이디 찾기</li>
           <li className="before:mx-3 before:content-['|']">비밀번호 찾기</li>
@@ -85,6 +80,16 @@ function LoginForm() {
       </div>
       <LoginOthers />
     </form>
+  );
+}
+
+function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button className="mt-3 h-[50px] w-full bg-black text-white" disabled={pending}>
+      로그인
+    </button>
   );
 }
 
