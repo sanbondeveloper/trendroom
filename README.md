@@ -18,23 +18,6 @@
 - [Next.js 14 Docs](https://nextjs.org/docs)
 - [Next.js 14 Tutorial](https://nextjs.org/learn?utm_source=next-site&utm_medium=homepage-cta&utm_campaign=home)
 
-## 실행 방법
-
-### Requirements
-
-- Node.js 20.11.0
-- Npm 9.6.7
-
-### Frontend & Backend
-
-```bash
-cd trendroom
-nvm use 20.11.0
-npm install
-npm run dev // 프론트 개발 서버 실행
-node ./server // 벡 개발 서버 실행
-```
-
 ## 기술 스택
 
 ### Environment
