@@ -1,13 +1,15 @@
 import type { User } from '@/app/lib/definitions';
+import { cookies } from 'next/headers';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import KaKaoProvider from 'next-auth/providers/kakao';
-import { authConfig } from './auth.config';
 import { z } from 'zod';
+
+import { authConfig } from './auth.config';
 
 async function getUser(input: { email: string; password: string }): Promise<User | undefined> {
   try {
-    const response = await fetch('https://port-0-trendroom-backend-2aat2cluqqq264.sel5.cloudtype.app/api/auth/login', {
+    const response = await fetch(`${process.env.SERVER_URL}/api/auth/login`, {
       method: 'POST',
       body: JSON.stringify({ email: input.email, password: input.password }),
       headers: {
@@ -16,6 +18,9 @@ async function getUser(input: { email: string; password: string }): Promise<User
     });
 
     const user = await response.json();
+    const cookieStore = cookies();
+
+    cookieStore.set('accessToken', user.token);
 
     return user;
   } catch (error) {

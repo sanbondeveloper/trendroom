@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
+import { cookies } from 'next/headers';
 
 export const authConfig = {
   pages: {
@@ -6,6 +7,27 @@ export const authConfig = {
   },
   callbacks: {
     async signIn({ user, profile }) {
+      if (!profile) return true;
+
+      const response = await fetch(`${process.env.SERVER_URL}/api/auth/login/kakao`, {
+        method: 'POST',
+        body: JSON.stringify({
+          email: user.email || null,
+          nick: user.name,
+          snsId: profile.id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) return false;
+
+      const data = await response.json();
+      const cookieStore = cookies();
+
+      cookieStore.set('accessToken', data.token);
+
       return true;
     },
     authorized({ auth, request: { nextUrl } }) {
