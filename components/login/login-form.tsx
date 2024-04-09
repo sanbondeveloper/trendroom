@@ -30,6 +30,7 @@ function LoginForm() {
           type="email"
           name="email"
           id="email"
+          data-cy="emailInput"
           placeholder="이메일"
           value={emailInput}
           onChange={(e) => setEmailInput(e.target.value)}
@@ -43,6 +44,7 @@ function LoginForm() {
           type={isPasswordVisible ? 'text' : 'password'}
           name="password"
           id="password"
+          data-cy="passwordInput"
           placeholder="비밀번호"
           value={passwordInput}
           onChange={(e) => setPasswordInput(e.target.value)}
@@ -87,7 +89,7 @@ function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button className="mt-3 h-[50px] w-full bg-black text-white" disabled={pending}>
+    <button className="mt-3 h-[50px] w-full bg-black text-white" data-cy="loginButton" disabled={pending}>
       로그인
     </button>
   );
