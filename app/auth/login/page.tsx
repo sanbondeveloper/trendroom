@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import LoginForm from '@/components/login/login-form';
 import LoginHeader from '@/components/login/login-header';
-import Tab from '@/components/tab';
+import Tab from '@/components/ui/tab';
 import OrderInquiry from '@/components/login/order-inquiry';
 import clsx from 'clsx';
 
