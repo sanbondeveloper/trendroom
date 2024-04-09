@@ -89,7 +89,12 @@ function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button className="mt-3 h-[50px] w-full bg-black text-white" data-cy="loginButton" disabled={pending}>
+    <button
+      className="mt-3 h-[50px] w-full bg-black text-white disabled:bg-[#f3f3f3]"
+      data-cy="loginButton"
+      disabled={pending}
+      aria-disabled={pending}
+    >
       로그인
     </button>
   );
