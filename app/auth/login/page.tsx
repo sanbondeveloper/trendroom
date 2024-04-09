@@ -1,8 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Link from 'next/link';
-import { auth } from '@/auth';
 
 import LoginForm from '@/components/login/login-form';
 import LoginHeader from '@/components/login/login-header';

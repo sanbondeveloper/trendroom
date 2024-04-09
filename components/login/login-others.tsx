@@ -1,9 +1,18 @@
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 function LoginOthers() {
   return (
     <div className="mt-4 flex flex-col">
-      <Link className="bg-kakao-yellow flex h-[45px] items-center justify-center" href="#">
+      <button
+        className="flex h-[45px] items-center justify-center bg-kakao-yellow"
+        onClick={async () => {
+          await signIn('kakao', {
+            redirect: true,
+            callbackUrl: '/',
+          });
+        }}
+      >
         <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
           <title>kakao 로고</title>
           <path
@@ -14,7 +23,7 @@ function LoginOthers() {
           ></path>
         </svg>
         카카오 로그인
-      </Link>
+      </button>
       <Link className="mt-3 flex h-[45px] items-center justify-center border" href="#">
         <svg fill="none" height="30" viewBox="0 0 29 30" width="29" xmlns="http://www.w3.org/2000/svg">
           <title>apple 로고</title>

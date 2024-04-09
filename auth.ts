@@ -1,6 +1,7 @@
 import type { User } from '@/app/lib/definitions';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import KaKaoProvider from 'next-auth/providers/kakao';
 import { authConfig } from './auth.config';
 import { z } from 'zod';
 
@@ -24,7 +25,12 @@ async function getUser(input: { email: string; password: string }): Promise<User
   }
 }
 
-export const { auth, signIn, signOut } = NextAuth({
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+} = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -37,13 +43,16 @@ export const { auth, signIn, signOut } = NextAuth({
 
           if (!user) return null;
 
-          console.log('user', user);
           // 반환된 객체가 JWT으로
           return user;
         }
 
         return null;
       },
+    }),
+    KaKaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET,
     }),
   ],
 });

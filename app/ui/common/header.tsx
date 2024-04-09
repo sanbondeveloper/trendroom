@@ -29,7 +29,7 @@ export default async function Header() {
               <li className="ml-6">
                 <Link href="#">알림</Link>
               </li>
-              <li className="ml-6">{session ? <LogOutButton /> : <Link href={'/login'}>로그인</Link>}</li>
+              <li className="ml-6">{session ? <LogOutButton /> : <Link href={'/auth/login'}>로그인</Link>}</li>
             </ul>
           </div>
           <div className="mb-6 flex items-center justify-between">
