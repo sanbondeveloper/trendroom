@@ -4,7 +4,10 @@ function SocialLoginButton() {
   return (
     <div className="mt-10">
       <form action={naverLogin}>
-        <button className="relative mb-2 h-[52px] w-full rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222]">
+        <button
+          className="relative mb-2 h-[52px] w-full rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222] disabled:bg-[#ebebeb]"
+          disabled={true}
+        >
           <svg
             className="absolute left-[22px] top-[17px]"
             fill="none"
@@ -22,6 +25,7 @@ function SocialLoginButton() {
             ></path>
           </svg>
           네이버로 로그인
+          <span className="text-xs">(next-auth 오류)</span>
         </button>
       </form>
 
