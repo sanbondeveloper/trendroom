@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import KaKaoProvider from 'next-auth/providers/kakao';
+import NaverProvider from 'next-auth/providers/naver';
 import { z } from 'zod';
 
 import { authConfig } from './auth.config';
@@ -19,6 +20,8 @@ async function getUser(input: { email: string; password: string }): Promise<User
 
     const user = await response.json();
     const cookieStore = cookies();
+
+    console.log('user', user);
 
     cookieStore.set('accessToken', user.token);
 
@@ -47,6 +50,7 @@ export const {
           const user = await getUser({ email, password });
 
           if (!user) return null;
+          if (user?.code === 401) return null;
 
           // 반환된 객체가 JWT으로
           return user;
@@ -58,6 +62,11 @@ export const {
     KaKaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID,
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
+    }),
+    // https://github.com/nextauthjs/next-auth/discussions/9313
+    NaverProvider({
+      clientId: process.env.NAVER_CLIENT_ID,
+      clientSecret: process.env.NAVER_CLIENT_SECRET,
     }),
   ],
 });

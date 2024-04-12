@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import MainHeader from '@/components/ui/main-header';
+import Header from '../ui/common/header';
 
 export const metadata: Metadata = {
   title: 'TrendRoom',
@@ -13,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <MainHeader />
+      <Header />
       {children}
     </>
   );

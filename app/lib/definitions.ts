@@ -8,6 +8,7 @@ export interface User {
   provider: 'local' | 'kakao' | 'apple';
   snsId?: string;
   accessToken: string;
+  code: number;
 }
 
 export interface IUser {

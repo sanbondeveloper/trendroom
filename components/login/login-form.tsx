@@ -1,102 +1,86 @@
-import { useCallback, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+'use client';
 
-import PasswordVisibleToggle from './password-visible-toggle';
-import InputClearBtn from './input-clear-btn';
-import LoginOthers from './login-others';
+import { useState } from 'react';
+import { useFormState } from 'react-dom';
+import clsx from 'clsx';
+
 import { authenticate } from '@/lib/actions';
+import LoginButton from './login-button';
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 
 function LoginForm() {
-  const [emailInput, setEmailInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
-  const [autoLogin, setAutoLogin] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [email, setEmail] = useState({ value: '', isDirty: false, isValid: false });
+  const [password, setPassword] = useState({ value: '', isDirty: false, isValid: false });
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
-  const handleisVisibleChange = useCallback(() => {
-    setIsPasswordVisible((prev) => !prev);
-  }, []);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail({
+      value: e.target.value,
+      isDirty: true,
+      isValid: emailRegex.test(e.target.value),
+    });
+  };
 
-  const handlePasswordClear = useCallback(() => {
-    setPasswordInput('');
-  }, []);
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword({
+      value: e.target.value,
+      isDirty: true,
+      isValid: passwordRegex.test(e.target.value),
+    });
+  };
+
+  const isEmailInvalid = email.isDirty && !email.isValid;
+  const isPasswordInvalid = password.isDirty && !password.isValid;
+  const isFormValid = email.isValid && password.isValid;
 
   return (
-    <form className="px-7" action={dispatch}>
-      <div>
-        <label htmlFor="email" />
+    <form action={dispatch}>
+      <div className="relative">
+        <label className={clsx('block text-sm font-bold', { 'text-[#f15746]': isEmailInvalid })} htmlFor="email">
+          <h3>이메일 주소</h3>
+        </label>
         <input
-          className="w-full"
+          className={clsx('w-[100%] border-b-[1px] py-2 outline-0 focus:border-b-black', {
+            'border-b-[#f15746] focus:border-b-[#f15746]': isEmailInvalid,
+          })}
           type="email"
           name="email"
           id="email"
-          data-cy="emailInput"
-          placeholder="이메일"
-          value={emailInput}
-          onChange={(e) => setEmailInput(e.target.value)}
+          placeholder="예) kream@kream.co.kr"
+          value={email.value}
+          onChange={handleEmailChange}
         />
+        <p className={clsx('absolute block text-xs leading-4 text-[#f15746]', { hidden: !isEmailInvalid })}>
+          이메일 주소를 정확히 입력해주세요.
+        </p>
       </div>
 
-      <div className="relative mt-2">
-        <label htmlFor="password" />
+      <div className="relative mt-6">
+        <label className={clsx('block text-sm font-bold', { 'text-[#f15746]': isPasswordInvalid })} htmlFor="password">
+          <h3>비밀번호</h3>
+        </label>
         <input
-          className="w-full"
-          type={isPasswordVisible ? 'text' : 'password'}
+          className={clsx('w-[100%] border-b-[1px] py-2 outline-0 focus:border-b-black', {
+            'border-b-[#f15746] focus:border-b-[#f15746]': isPasswordInvalid,
+          })}
+          type="password"
           name="password"
           id="password"
-          data-cy="passwordInput"
-          placeholder="비밀번호"
-          value={passwordInput}
-          onChange={(e) => setPasswordInput(e.target.value)}
+          maxLength={16}
+          value={password.value}
+          onChange={handlePasswordChange}
         />
-        {passwordInput && (
-          <div className="absolute right-9 top-2 ">
-            <InputClearBtn onInputClear={handlePasswordClear} />
-          </div>
-        )}
-        <PasswordVisibleToggle isVisible={isPasswordVisible} onisVisibleChange={handleisVisibleChange} />
+        <p className={clsx('block text-xs leading-4 text-[#f15746]', { hidden: !isPasswordInvalid })}>
+          영문, 숫자, 특수문자를 조합해서 입력해주세요. (8~16자)
+        </p>
       </div>
 
-      <div>
-        <LoginButton />
+      <div className="mt-5">
+        <LoginButton isFormValid={isFormValid} />
       </div>
-
-      <div className="mt-5 flex items-center justify-between">
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            name="autologin"
-            id="autologin"
-            checked={autoLogin}
-            onChange={(e) => setAutoLogin(e.target.checked)}
-          />
-          <label className="ml-2" htmlFor="autologin">
-            자동 로그인
-          </label>
-        </div>
-
-        <ul className="flex text-sm">
-          <li>아이디 찾기</li>
-          <li className="before:mx-3 before:content-['|']">비밀번호 찾기</li>
-        </ul>
-      </div>
-      <LoginOthers />
     </form>
-  );
-}
-
-function LoginButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      className="mt-3 h-[50px] w-full bg-black text-white disabled:bg-[#f3f3f3]"
-      data-cy="loginButton"
-      disabled={pending}
-      aria-disabled={pending}
-    >
-      로그인
-    </button>
   );
 }
 

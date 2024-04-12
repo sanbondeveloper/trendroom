@@ -3,11 +3,15 @@ import { cookies } from 'next/headers';
 
 export const authConfig = {
   pages: {
-    signIn: '/auth/login',
+    signIn: '/login',
   },
   callbacks: {
-    async signIn({ user, profile }) {
+    async signIn({ user, profile, account }) {
       if (!profile) return true;
+
+      console.log(user, profile, account);
+
+      if (account?.provider !== 'kakao') return true;
 
       const response = await fetch(`${process.env.SERVER_URL}/api/auth/login/kakao`, {
         method: 'POST',

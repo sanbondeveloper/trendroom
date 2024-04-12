@@ -22,3 +22,11 @@ export async function authenticate(prevState: string | undefined, formData: Form
     throw error;
   }
 }
+
+export async function kakaoLogin() {
+  await signIn('kakao', { redirect: true, redirectTo: '/' });
+}
+
+export async function naverLogin() {
+  await signIn('naver', { redirect: true, redirectTo: '/' });
+}
