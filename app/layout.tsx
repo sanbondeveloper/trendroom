@@ -4,6 +4,7 @@ import { nato_sans_kr } from '@/app/ui/fonts';
 import Script from 'next/script';
 import RecoilRootWrapper from './ui/common/recoil-root-wrapper';
 import AuthSession from '@/components/auth-session';
+import Header from './ui/common/header';
 
 export const metadata: Metadata = {
   title: 'TrendRoom',
@@ -19,7 +20,8 @@ export default function RootLayout({
     <html lang="ko" className={`h-full bg-white`}>
       <body>
         <RecoilRootWrapper>
-          <AuthSession>{children}</AuthSession>
+          <Header />
+          {children}
         </RecoilRootWrapper>
         <div id="modal-root" />
       </body>

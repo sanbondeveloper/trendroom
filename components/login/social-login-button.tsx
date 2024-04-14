@@ -1,55 +1,64 @@
-import { kakaoLogin, naverLogin } from '@/lib/actions';
+const crypto = require('crypto');
+
+const random = crypto.randomBytes(16);
+const state = BigInt('0x' + random.toString('hex')).toString();
+
+const KAKAO_CLIENT_ID = process.env.KAKAO_CLIENT_ID;
+const KAKAO_REDIRECT_URL = 'http://localhost:3000/api/auth/callback/kakao';
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URL}&scope=profile_nickname`;
+
+const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
+const NAVER_REDIRECT_URL = 'http://localhost:3000/api/auth/callback/naver';
+const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URL}&state=${state}`;
 
 function SocialLoginButton() {
   return (
     <div className="mt-10">
-      <form action={naverLogin}>
-        <button
-          className="relative mb-2 h-[52px] w-full rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222] disabled:bg-[#ebebeb]"
-          disabled={true}
+      <a
+        className="relative mb-2 flex h-[52px] w-full items-center justify-center rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222]"
+        href={NAVER_AUTH_URL}
+      >
+        <svg
+          className="absolute left-[22px] top-[17px]"
+          fill="none"
+          height="20"
+          viewBox="0 0 30 30"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            className="absolute left-[22px] top-[17px]"
-            fill="none"
-            height="20"
-            viewBox="0 0 30 30"
-            width="20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Naver 로고</title>
-            <path
-              clipRule="evenodd"
-              fill="#2DB400"
-              d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"
-              fillRule="evenodd"
-            ></path>
-          </svg>
-          네이버로 로그인
-          <span className="text-xs">(next-auth 오류)</span>
-        </button>
-      </form>
+          <title>Naver 로고</title>
+          <path
+            clipRule="evenodd"
+            fill="#2DB400"
+            d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"
+            fillRule="evenodd"
+          ></path>
+        </svg>
+        네이버로 로그인
+      </a>
 
-      <form action={kakaoLogin}>
-        <button className="relative mb-2 h-[52px] w-full rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222]">
-          <svg
-            className="absolute left-[15px] top-[11px]"
-            fill="none"
-            height="30"
-            viewBox="0 0 30 30"
-            width="30"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>kakao 로고</title>
-            <path
-              clipRule="evenodd"
-              d="M15 7C10.029 7 6 10.129 6 13.989C6 16.389 7.559 18.505 9.932 19.764L8.933 23.431C8.845 23.754 9.213 24.013 9.497 23.826L13.874 20.921C14.243 20.958 14.618 20.978 15 20.978C19.971 20.978 24 17.849 24 13.989C24 10.129 19.971 7 15 7Z"
-              fill="black"
-              fillRule="evenodd"
-            ></path>
-          </svg>
-          카카오로 로그인
-        </button>
-      </form>
+      <a
+        className="relative mb-2 flex h-[52px] w-full items-center justify-center rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222]"
+        href={KAKAO_AUTH_URL}
+      >
+        <svg
+          className="absolute left-[15px] top-[11px]"
+          fill="none"
+          height="30"
+          viewBox="0 0 30 30"
+          width="30"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>kakao 로고</title>
+          <path
+            clipRule="evenodd"
+            d="M15 7C10.029 7 6 10.129 6 13.989C6 16.389 7.559 18.505 9.932 19.764L8.933 23.431C8.845 23.754 9.213 24.013 9.497 23.826L13.874 20.921C14.243 20.958 14.618 20.978 15 20.978C19.971 20.978 24 17.849 24 13.989C24 10.129 19.971 7 15 7Z"
+            fill="black"
+            fillRule="evenodd"
+          ></path>
+        </svg>
+        카카오로 로그인
+      </a>
 
       {/* <button className="relative mb-2 h-[52px] w-full rounded-xl border-[1px] border-[#ebebeb] font-bold text-[#222]">
         <svg

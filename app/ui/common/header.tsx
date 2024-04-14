@@ -1,15 +1,15 @@
-import { auth } from '@/auth';
 import { getCategories, getProducts } from '../../lib/api';
 import LogOutButton from '../auth/logout-button';
 import Link from 'next/link';
 import CategoriesList from '../categories-list';
 import SearchModal from '../search/search-modal';
 import InCartBtn from '../in-cart-btn';
+import { cookies } from 'next/headers';
 
 export default async function Header() {
-  const session = await auth();
   const categories = await getCategories();
   const products = await getProducts('all', '');
+  const session = cookies().get('connect.sid')?.value;
 
   return (
     <>

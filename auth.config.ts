@@ -9,8 +9,6 @@ export const authConfig = {
     async signIn({ user, profile, account }) {
       if (!profile) return true;
 
-      console.log(user, profile, account);
-
       if (account?.provider !== 'kakao') return true;
 
       const response = await fetch(`${process.env.SERVER_URL}/api/auth/login/kakao`, {

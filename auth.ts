@@ -21,8 +21,6 @@ async function getUser(input: { email: string; password: string }): Promise<User
     const user = await response.json();
     const cookieStore = cookies();
 
-    console.log('user', user);
-
     cookieStore.set('accessToken', user.token);
 
     return user;
