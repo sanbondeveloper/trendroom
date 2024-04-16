@@ -1,10 +1,10 @@
-import './globals.css';
 import type { Metadata } from 'next';
-import { nato_sans_kr } from '@/app/ui/fonts';
 import Script from 'next/script';
+
+import './globals.css';
 import RecoilRootWrapper from './ui/common/recoil-root-wrapper';
-import AuthSession from '@/components/auth-session';
 import Header from './ui/common/header';
+import { NotificationContextProvider } from '@/store/notification-context';
 
 export const metadata: Metadata = {
   title: 'TrendRoom',
@@ -20,8 +20,11 @@ export default function RootLayout({
     <html lang="ko" className={`h-full bg-white`}>
       <body>
         <RecoilRootWrapper>
-          <Header />
-          {children}
+          <NotificationContextProvider>
+            <Header />
+            <div className="mt-[86px]" />
+            {children}
+          </NotificationContextProvider>
         </RecoilRootWrapper>
         <div id="modal-root" />
       </body>

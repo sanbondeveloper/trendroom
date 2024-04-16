@@ -1,12 +1,9 @@
 'use server';
 
-import { signIn } from '@/auth';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
-export async function authenticate(prevState: string | undefined, formData: FormData) {
-  const email = formData.get('email');
-  const password = formData.get('password');
+export async function authenticate({ email, password }: { email: string; password: string }) {
   const cookieStore = cookies();
   const maxAge = 30 * 24 * 60 * 60 * 1000;
 
@@ -59,8 +56,4 @@ export async function signOut() {
   } catch (error) {
     throw error;
   }
-}
-
-export async function naverLogin() {
-  await signIn('naver', { redirect: true, redirectTo: '/' });
 }

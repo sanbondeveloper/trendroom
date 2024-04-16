@@ -5,6 +5,7 @@ import CategoriesList from '../categories-list';
 import SearchModal from '../search/search-modal';
 import InCartBtn from '../in-cart-btn';
 import { cookies } from 'next/headers';
+import Toast from '@/components/ui/toast';
 
 export default async function Header() {
   const categories = await getCategories();
@@ -13,7 +14,7 @@ export default async function Header() {
 
   return (
     <>
-      <header className="fixed left-0 right-0 top-0 z-10 flex justify-center bg-white px-10 pt-2 shadow">
+      <header className="fixed left-0 right-0 top-0 z-10 flex h-[86px] justify-center bg-white px-10 pt-2 shadow">
         <div className="w-full max-w-[1280px]">
           <div className="mb-4 flex justify-end">
             <ul className="flex w-full justify-end text-xs">
@@ -58,6 +59,7 @@ export default async function Header() {
           </div>
           <CategoriesList categories={categories} />
         </div>
+        <Toast />
       </header>
     </>
   );

@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { useFormState } from 'react-dom';
 import clsx from 'clsx';
 
 import { authenticate } from '@/lib/actions';
 import LoginButton from './login-button';
+import useNotificationActions from '@/hooks/useNotificationActions';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
@@ -13,7 +13,7 @@ const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8
 function LoginForm() {
   const [email, setEmail] = useState({ value: '', isDirty: false, isValid: false });
   const [password, setPassword] = useState({ value: '', isDirty: false, isValid: false });
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const actions = useNotificationActions();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail({
@@ -31,12 +31,26 @@ function LoginForm() {
     });
   };
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const message = await authenticate({ email: email.value, password: password.value });
+
+    if (message) {
+      actions?.showNotification({
+        title: '',
+        message: message,
+        status: 'error',
+      });
+    }
+  };
+
   const isEmailInvalid = email.isDirty && !email.isValid;
   const isPasswordInvalid = password.isDirty && !password.isValid;
   const isFormValid = email.isValid && password.isValid;
 
   return (
-    <form action={dispatch}>
+    <form onSubmit={handleSubmit}>
       <div className="relative">
         <label className={clsx('block text-sm font-bold', { 'text-[#f15746]': isEmailInvalid })} htmlFor="email">
           <h3>이메일 주소</h3>
