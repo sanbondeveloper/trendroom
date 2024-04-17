@@ -31,8 +31,12 @@ function LoginForm() {
     });
   };
 
+  const isFormValid = email.isValid && password.isValid;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!isFormValid) return;
 
     const message = await authenticate({ email: email.value, password: password.value });
 
@@ -47,7 +51,6 @@ function LoginForm() {
 
   const isEmailInvalid = email.isDirty && !email.isValid;
   const isPasswordInvalid = password.isDirty && !password.isValid;
-  const isFormValid = email.isValid && password.isValid;
 
   return (
     <form onSubmit={handleSubmit}>
