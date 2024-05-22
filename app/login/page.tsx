@@ -3,7 +3,11 @@ import clsx from 'clsx';
 import LoginForm from '@/components/login/login-form';
 import SocialLoginButton from '@/components/login/social-login-button';
 
-const looks = ['이메일 가입', '이메일 찾기', '비밀번호 찾기'];
+const looks = [
+  { title: '이메일 가입', link: '/join' },
+  { title: '이메일 찾기', link: '#' },
+  { title: '비밀번호 찾기', link: '#' },
+];
 
 function LoginPage() {
   return (
@@ -16,14 +20,14 @@ function LoginPage() {
           <ul className="mt-5 flex justify-evenly">
             {looks.map((look, idx) => (
               <li
-                key={look}
+                key={look.title}
                 className={clsx('inline-flex flex-1 items-start', {
                   'before:mt-[3px] before:inline-block before:h-[13px] before:w-[1px] before:bg-[#d3d3d3] before:content-[""]':
                     idx !== 0,
                 })}
               >
-                <Link className="m-auto inline-flex px-[10px] text-sm tracking-tighter " href="#">
-                  {look}
+                <Link className="m-auto inline-flex px-[10px] text-sm tracking-tighter " href={look.link}>
+                  {look.title}
                 </Link>
               </li>
             ))}
