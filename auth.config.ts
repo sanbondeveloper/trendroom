@@ -33,7 +33,9 @@ export const authConfig = {
       return true;
     },
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
+      const cookieStore = cookies();
+
+      console.log(cookieStore);
 
       return true;
     },
