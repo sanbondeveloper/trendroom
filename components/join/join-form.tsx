@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import clsx from 'clsx';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { emailRegex, passwordRegex } from '@/lib/schemas';
+import { checkReferrerCode } from '@/lib/actions';
 
 function JoinForm() {
   const [email, setEmail] = useState({ value: '', isDirty: false, isValid: false });
@@ -26,13 +28,20 @@ function JoinForm() {
     });
   };
 
-  const handleReferrerCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target)
-      setReferrerCode({
-        value: e.target.value,
-        isDirty: true,
-        isValid: false,
-      });
+  const handleReferrerCodeCheck = useDebouncedCallback(async (code: string) => {
+    const isValid = await checkReferrerCode(code);
+
+    setReferrerCode((prev) => ({ ...prev, isValid }));
+  }, 500);
+
+  const handleReferrerCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReferrerCode({
+      value: e.target.value,
+      isDirty: true,
+      isValid: false,
+    });
+
+    handleReferrerCodeCheck(e.target.value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -109,7 +118,7 @@ function JoinForm() {
           placeholder="추천인 코드를 입력하세요"
           autoComplete="off"
           value={referrerCode.value}
-          onChange={handleReferrerCode}
+          onChange={handleReferrerCodeChange}
           onKeyDown={handleKeyDown}
         />
         <p className={clsx('block text-xs leading-4 text-[#f15746]', { hidden: !isReferrerCodeInvalid })}>

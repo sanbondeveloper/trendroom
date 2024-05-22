@@ -57,3 +57,16 @@ export async function signOut() {
     throw error;
   }
 }
+
+export async function checkReferrerCode(code: string) {
+  try {
+    const response = await fetch(`${process.env.SERVER_URL}/api/auth/referrer/${code}`, {
+      method: 'GET',
+    });
+
+    if (response.status === 200) return true;
+    else return false;
+  } catch (error) {
+    throw error;
+  }
+}
