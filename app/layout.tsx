@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 
 import './globals.css';
-import { BMYEONSUNG } from '@/components/ui/fonts';
 import RecoilRootWrapper from './ui/common/recoil-root-wrapper';
 import Header from './ui/common/header';
+import { BMYEONSUNG } from '@/components/ui/fonts';
 import { NotificationContextProvider } from '@/store/notification-context';
 
 export const metadata: Metadata = {

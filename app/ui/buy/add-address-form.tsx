@@ -31,7 +31,7 @@ export default function AddAddressForm({
 
   const onSubmit: SubmitHandler<TAddress> = async (data) => {
     await addAddress(data);
-    onShippingAddressChange(data, data.checked);
+    onShippingAddressChange(data, data.checked || false);
     onClose();
   };
 

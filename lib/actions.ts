@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { ProductCategories } from '@/types/product';
 
 export async function authenticate({ email, password }: { email: string; password: string }) {
   const cookieStore = cookies();
@@ -69,4 +70,19 @@ export async function checkReferrerCode(code: string) {
   } catch (error) {
     throw error;
   }
+}
+
+export async function getProducts(category?: ProductCategories) {
+  const url = !category
+    ? 'https://fakestoreapi.com/products'
+    : `https://fakestoreapi.com/products/category/${category}`;
+
+  const response = await fetch(url);
+  const products = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch products');
+  }
+
+  return products;
 }
