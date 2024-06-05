@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { ProductCategories } from '@/types/product';
+import { Product, ProductCategories } from '@/types/product';
 
 export async function authenticate({ email, password }: { email: string; password: string }) {
   const cookieStore = cookies();
@@ -72,17 +72,31 @@ export async function checkReferrerCode(code: string) {
   }
 }
 
-export async function getProducts(category?: ProductCategories) {
+export async function getProducts(category?: ProductCategories): Promise<Product[]> {
   const url = !category
     ? 'https://fakestoreapi.com/products'
     : `https://fakestoreapi.com/products/category/${category}`;
 
   const response = await fetch(url);
-  const products = await response.json();
 
   if (!response.ok) {
     throw new Error('Failed to fetch products');
   }
 
+  const products = await response.json();
+
   return products;
+}
+
+export async function getInterests(): Promise<number[]> {
+  const response = await fetch(`${process.env.SERVER_URL}/api/user/interests`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const { interests } = await response.json();
+
+  return interests;
 }

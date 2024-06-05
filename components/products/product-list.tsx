@@ -1,8 +1,8 @@
-import { Product } from '@/types/product';
+import { ProductWithInterested } from '@/types/product';
 import ProductItem from './product-item';
 
 interface Props {
-  products: Product[];
+  products: ProductWithInterested[];
 }
 
 function ProductList({ products }: Props) {
